@@ -1,21 +1,22 @@
 import React from 'react';
-import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import Home from '../pages/Home';
 import Creator from '../pages/Creator';
 import FlingBox from '../pages/FlingBox';
 import MyDrawer from '../pages/MyDrawer';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
-const Tab = createMaterialTopTabNavigator();
+const Tab = createBottomTabNavigator();
+
 function BottomTab() {
   return (
     <Tab.Navigator
       initialRouteName="Home"
-      activeColor="#2f2f2f"
-      Style={{ fontSize: 8 }}
-      barStyle={{ backgroundColor: "white" }}
-      tabBarPosition='bottom'
       backBehavior='history'
+      screenOptions={{
+        tabBarStyle: {backgroundColor: '#000',border:'none',color:'#ececec' },
+        tabBarActiveTintColor: '#fff'
+      }}
 
     >
       <Tab.Screen

@@ -1,11 +1,11 @@
 import React from 'react';
-
-const creator = () => {
+import { Text, Dimensions, StyleSheet, View } from 'react-native';
+const Creator = () => {
    return (
-      <div>
+      <Text>
          creator
-      </div>
+      </Text>
    );
 };
 
-export default creator;
+export default Creator;

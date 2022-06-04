@@ -1,10 +1,10 @@
 import React from 'react';
-
+import { Text, Dimensions, StyleSheet, View } from 'react-native';
 const FlingBox = () => {
    return (
-      <div>
+      <Text>
          FlingBox
-      </div>
+      </Text>
    );
 };
 
