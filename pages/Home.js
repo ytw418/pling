@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { Text, Dimensions, StyleSheet, View, TouchableOpacity, Image } from 'react-native';
+import { Text, Dimensions, StyleSheet, View, TouchableOpacity, Image ,} from 'react-native';
 import { SwiperFlatList } from 'react-native-swiper-flatlist';
 import styled,{css} from 'styled-components/native';
 import axios from "axios";
-
+import { LinearGradient } from 'expo-linear-gradient';
 
 const Home = () => {
    const [slides, setSlides] = useState([
@@ -137,7 +137,7 @@ const Home = () => {
          axios.defaults.headers.post['X-Requested-With'] = 'XMLHttpRequest';
          const result = await axios.get('test-slides')
 
-         alert(result)
+        // alert(result)
          setSlides(result.data.data)
          //console.log('api :>> ', slides);
       } catch (error) {
@@ -160,14 +160,15 @@ const Home = () => {
                paginationStyleItemActive={{ backgroundColor: 'rgb(46, 239, 170)' }}
             >{slides && slides.map((slides, i) =>
                <TouchableOpacity style={styles} key={i} >
+                  <LinearGradient start={{x: 1, y: 1}} end={{x: 1, y: 0.5}}  colors={['rgba(0,0,0,1)', 'transparent']}>
                   <Image style={styles.posterImage} source={{ uri: slides.poster }}></Image>
+                  </LinearGradient>
                   <Image style={styles.titleImage} source={{ uri: slides.titleImage }}></Image>
                   <View  style={[styles.child]}>
                      <Text style={styles.summar}>{slides.summary}</Text>
                      <Text style={styles.genres}>{slides.genres}</Text>
                   </View>
                </TouchableOpacity>
-
             )}
 
             </SwiperFlatList>
@@ -178,8 +179,12 @@ const Home = () => {
 
 const Container = styled.ScrollView`
 background-color: #000;
-
 `
+// const PosterImage = styled.Image`
+// width:100%;
+// height:400;
+// background: linear-gradient(red,black);
+// `
 const { width } = Dimensions.get('window');
 const { height } = Dimensions.get('window');
 const styles = StyleSheet.create({
@@ -188,7 +193,7 @@ const styles = StyleSheet.create({
    child: { width, },
    summar: { fontSize:13, textAlign: 'left', color:'#fff',paddingLeft:10, paddingTop:10, },
    genres: { fontSize:13, textAlign: 'left', color:'rgb(46, 239, 170) ',paddingLeft:10,paddingTop:10,paddingBottom:35,  },
-   posterImage: {width:width,height:400},
+   posterImage: {width:width,height:400,zIndex:-1},
    titleImage:{width:width,height:400,position:'absolute',}
 });
 
