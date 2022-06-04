@@ -15,9 +15,10 @@ function BottomTab() {
       backBehavior='history'
       screenOptions={{
         tabBarStyle: {backgroundColor: '#000',border:'none',color:'#ececec' },
-        tabBarActiveTintColor: '#fff'
+        tabBarActiveTintColor: '#fff',
+        headerShown:false
+        
       }}
-
     >
       <Tab.Screen
         name="Home"
@@ -34,6 +35,7 @@ function BottomTab() {
         name="Creator"
         component={Creator}
         options={{
+          
           tabBarLabel: 'Creator',
           tabBarLabelStyle: { fontSize: 12 },
           tabBarIcon: ({ color }) => (
