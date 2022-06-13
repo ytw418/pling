@@ -18,7 +18,8 @@ const Home = () => {
       axios.defaults.headers.post["X-Requested-With"] = "XMLHttpRequest";
       const result = await axios.get("test-slides");
       if (result) {
-        setSlides(result?.data?.data ?? []);
+        //setSlides(result?.data?.data ?? []);
+        setSlides(result?.data?.data ? result.data.data:[]);
       }
 
       console.log("api :>> ", slides);

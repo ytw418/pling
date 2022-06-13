@@ -1,11 +1,7 @@
-import React from 'react';
-import { Text, Dimensions, StyleSheet, View } from 'react-native';
+import React from "react";
+import { Text, Dimensions, StyleSheet, View } from "react-native";
 const FlingBox = () => {
-   return (
-      <Text>
-         FlingBox
-      </Text>
-   );
+  return <Text>FlingBox</Text>;
 };
 
 export default FlingBox;
