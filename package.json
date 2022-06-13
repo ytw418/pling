@@ -34,7 +34,9 @@
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
-    "babel-plugin-styled-components": "^2.0.7"
+    "babel-plugin-styled-components": "^2.0.7",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-prettier": "^4.0.0"
   },
   "private": true
 }
