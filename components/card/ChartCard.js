@@ -18,7 +18,6 @@ const Card = styled.View`
   display: flex;
   flex-direction: row;
   align-items: center;
-  width: 100%;
   height: 70px;
   margin: 8px 8px 8px 0px;
 `;

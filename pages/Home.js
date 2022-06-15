@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   Image,
 } from "react-native";
+import { PAGE_SIZE } from "../constants";
 import { SwiperFlatList } from "react-native-swiper-flatlist";
 import styled, { css } from "styled-components/native";
 import axios from "axios";
@@ -18,10 +19,11 @@ const Home = () => {
   const [slides, setSlides] = useState([]);
   const [cate, setCate] = useState([]);
   const [syDefault, setSyDefault] = useState([]);
-  const [stChart, setStChart] = useState(false);
+  const [stChart, setStChart] = useState([]);
   const [syGrid, setSyGrid] = useState([]);
   const [syFull, setSyFull] = useState([]);
 
+  // const {constants} = constants();
   const AUTH_TOKEN =
     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Mywicm9sZSI6IlVTRVIiLCJpYXQiOjE2NTUwOTgyNjgsImV4cCI6MTY1NjMwNzg2OH0.eCh9VGnV9_iGQFrdzotCtBr-z3hYFeIQ0By9Zzlf2Pc";
 
@@ -52,6 +54,10 @@ const Home = () => {
 
   useEffect(() => {
     getMainApi();
+
+    return () => {
+      getMainApi();
+    };
   }, []);
 
   useEffect(() => {
@@ -75,9 +81,7 @@ const Home = () => {
         return val.listType === "SYNOPSIS_FULL";
       })
     );
-    setTimeout(() => {
-      console.log("1초 후 ");
-    }, 1000);
+    console.log("stChart", stChart);
   }, [cate]);
 
   const mainSlide = () => (
@@ -119,19 +123,23 @@ const Home = () => {
   );
 
   return (
-    <SafeAreaView>
-      <FlatListContainer
-        ListHeaderComponent={mainSlide}
-        data={[0]}
-        renderItem={() => (
-          <>
-            <SynopsisDefault syDefault={syDefault}></SynopsisDefault>
-            {stChart && <StoryChart stChart={stChart}></StoryChart>}
-          </>
-        )}
-        //keyExtractor={(item) => item.id}
-      />
-    </SafeAreaView>
+    slides !== [] && (
+      <SafeAreaView>
+        <FlatListContainer
+          ListHeaderComponent={mainSlide}
+          data={[0]}
+          renderItem={() => (
+            <>
+              <SynopsisDefault syDefault={syDefault}></SynopsisDefault>
+              {stChart.length !== 0 && (
+                <StoryChart stChart={stChart}></StoryChart>
+              )}
+            </>
+          )}
+          //keyExtractor={(item) => item.id}
+        />
+      </SafeAreaView>
+    )
   );
 };
 const SafeAreaView = styled.SafeAreaView`

@@ -6,22 +6,45 @@ import { PAGE_SIZE } from "../constants";
 const StoryChart = ({ stChart }) => {
   //console.log("인기순위", stChart[0]?.list);
 
-  // const arr = stChart[0]?.list;
-  // const list = arr.map(
-  //   (val, i) =>
-  //     i % PAGE_SIZE === 0 && {
+  const division = (arr) => {
+  //   const newArray = [];
+  //   arr.map((val, i) => {
+  //     if (i % PAGE_SIZE === 0) {
+  //       newArray.push({
+  //         page: i / PAGE_SIZE,
+  //         list: arr.slice(i, i + PAGE_SIZE),
+  //       });
+  //     }
+  //   });
+  //   return newArray;
+  // };
+
+  const list = arr.map((val,i)=>i % PAGE_SIZE === 0 && arr.slice(i, i + PAGE_SIZE) )
+
+  // for (let i = 0; i < arr.length; i++) {
+  //   if (i % PAGE_SIZE === 0) {
+  //     result.push({
   //       page: i / PAGE_SIZE,
   //       list: arr.slice(i, i + PAGE_SIZE),
-  //     }
-  // );
-  // console.log("list : ", list);
-  const arr = stChart[0]?.list;
-  const list = arr
-    .map(
-      (_, i, origin) => i % PAGE_SIZE === 0 && origin.slice(i, i + PAGE_SIZE)
-    )
-    .filter((val) => val.length === PAGE_SIZE);
-  console.log("list : ", list);
+  //     });
+  //   }
+  // }
+
+  //console.log("stChart[0]?.list", stChart[0]?.list);
+  // const length = arr.length;
+  // const divide =
+  //   Math.floor(length / ListNumber) +
+  //   (Math.floor(length % ListNumber) > 0 ? 1 : 0);
+  // const newArray = [];
+
+  // for (let i = 0; i <= divide; i++) {
+  //   // arr 0부터 ListNumber 잘라 새 arr에 넣기
+  //   newArray.push(arr.splice(0, ListNumber));
+  // }
+
+  // return newArray;
+
+  const list = division(stChart[0]?.list);
 
   return (
     <Container>
@@ -32,7 +55,7 @@ const StoryChart = ({ stChart }) => {
             <StChartSlide
               key={i}
               // horizontal
-              data={data}
+              data={data.list}
               renderItem={({ item, index }) => (
                 <ChartCard
                   ListNumber={index}

@@ -1,0 +1,255 @@
+[
+   {
+    "list":  [
+       {
+        "__typename": "Story",
+        "id": "a5c2848d-ef21-49f8-9dc8-4aaa0ee24832",
+        "poster": "https://imagedelivery.net/DAh_J1-4YW-zMNrkcEnK_w/6b5e5893-12c0-4720-e4b7-4c26eab13f00/large",
+        "subtitle": "개인 비서",
+        "summary": "요즘 들어 귀여워 죽겠단 말이지. 괴롭히며 괴롭히는 대로, 내버려 두면 내버려 두는 대로 안달 나서 이것저것 해달라는 꼴을 보고 있으면 정말... 가만둘 수가 없어. 요즘 회사 일도 바쁘고 별다를 것 없는 데이트만 해왔는데, 오랜만에 색다르게 해볼까? 내가 줄 상은 준비됐고... 그럼 '어, 난데. 정확히 10분 뒤에 자료 정리해서 갖고 와.'",
+        "synopsis":  {
+          "genres":  [
+            "남+나",
+            "오피스",
+            "체벌"
+          ],
+          "id": "1cf97eac-6345-4417-a284-22379bfbaaf6",
+          "title": "개인 비서"
+        },
+        "updatedAt": "1653742088904"
+      },
+       {
+        "__typename": "Story",
+        "id": "c15bff96-4371-46c9-9b50-9cd10589a763",
+        "poster": "https://imagedelivery.net/DAh_J1-4YW-zMNrkcEnK_w/5f9d6516-e5e5-4bfd-4616-a1209e605200/public",
+        "subtitle": "늦은 장마는 우리를 적셨다",
+        "summary": "늦은 장마가 계속되던 어느 날, 퇴근하려 버스를 기다리고 있는데 내 앞에 차가 한대 섰다. 우리 회사 대표님이었다. 비슷한 나이지만 나와는 다른 세계에 살고 있는 사람이라고 생각했던 그 대표님. 차에 타라는 대표님의 말에 나는 일 때문일 수도 있겠다 생각해서 차에 탔다. 그런데 대표님은 젖은 옷부터 해결하자며 날 집으로 데려간다.",
+        "synopsis":  {
+          "genres":  [
+            "여+남",
+            "대표님",
+            "로맨틱",
+          ],
+          "title": "늦은 장마는 우리를 적셨다",
+        },
+        "updatedAt": "1653918248792",
+      },
+       {
+        "__typename": "Story",
+        "id": "b59d2af2-4d46-4100-956e-b8c86fc8a99a",
+        "poster": "https://imagedelivery.net/DAh_J1-4YW-zMNrkcEnK_w/5f9d6516-e5e5-4bfd-4616-a1209e605200/public",
+        "subtitle": "굿모닝 섹스",
+        "summary": "야근을 얼마나 많이 했을까. 매일 야근하고 집에 와서 잠만 자는 생활을 반복했다. 그러던 어느 날 아침. 눈을 떴는데 오늘따라 옆에 누워있는 여자친구가 미칠 듯이 섹시하게 느껴진다. 2주.. 안 한 지 2주나 됐구나. 오늘은 못 참겠다. 그래서 옆에서 자고 있는 여자친구를 껴안고 키스하기 시작했다.",
+        "synopsis":  {
+          "genres":  [
+            "남+나",
+            "아침",
+            "욕실",
+          ],
+          "title": "굿모닝 섹스",
+        },
+        "updatedAt": "1643891050755",
+      },
+       {
+        "__typename": "Story",
+        "id": "caa920ab-1efa-40fb-98e8-c4bc329e2597",
+        "poster": "https://imagedelivery.net/DAh_J1-4YW-zMNrkcEnK_w/5f9d6516-e5e5-4bfd-4616-a1209e605200/public",
+        "subtitle": "닥치고 해, 그냥",
+        "summary": "갑자기 음악은 왜 틀어? 그래? 언제부터 이런 게 해보고 싶었대. 난... 그냥 너 신음만 들어도 좋은데.",
+        "synopsis":  {
+          "genres":  [
+            "남+나",
+            "커플",
+            "음악",
+          ],
+          "title": "닥치고 해, 그냥",
+        },
+        "updatedAt": "1650194159668",
+      },
+       {
+        "__typename": "Story",
+        "id": "d58c35aa-839b-45b3-adc1-d9befff82052",
+        "poster": "https://imagedelivery.net/DAh_J1-4YW-zMNrkcEnK_w/84ca1e3d-980a-4a05-140f-a9ed435c8900/public",
+        "subtitle": "교양수업",
+        "summary": "남자친구와 같이 듣는 교양 수업. 이렇게라도 수업을 맞추지 않으면 학교에서 보기 힘들다. 사실 수업을 듣는 건지 데이트를 하는 건지 잘 모르겠다. 매번 맨 뒤에 앉아서 놀았으니까. 오늘은 발표가 이어지는 시간이다. 남자친구가 발표를 마치고 들어오더니 내 치마 속으로 손을 넣었다! 아니, 아무리 불 꺼져있어서 다들 잔다고 해도 누가 보면 어쩌려고!",
+        "synopsis":  {
+          "genres":  [
+            "남+나",
+            "강의실",
+            "몰래",
+          ],
+          "id": "925c21e9-dc6a-424b-8eb9-22c1cc98e1c0",
+          "title": "교양수업",
+        },
+        "updatedAt": "1653126796504",
+      },
+    ],
+    "page": 0,
+  },
+   {
+    "list":  [
+       {
+        "__typename": "Story",
+        "id": "9ca24ecf-a032-4c67-b816-d19dadd0eef7",
+        "poster": "https://imagedelivery.net/DAh_J1-4YW-zMNrkcEnK_w/001f80d9-b2db-4596-d8f1-e60c17c81900/large",
+        "subtitle": "1화. 잠시 들어가겠습니다.",
+        "summary": "말씀해 보시지요. 지난 3년간 없는 사람 취급하며 애써 외면해오던 날 왜 이제서야 찾아오신 겁니까. 옛정이 그리워서 오셨습니까? 그게 아니라면... 내가 알고 있는 다른 이유 때문입니까?",
+        "synopsis":  {
+          "genres":  [
+            "여+남",
+            "불륜",
+            "시대물",
+          ],
+          "id": "348f8911-4b74-40fa-883d-8fd5505e0a15",
+          "title": "도련님, 들어갈게요",
+        },
+        "updatedAt": "1653569389058",
+      },
+       {
+        "__typename": "Story",
+        "id": "6db8d838-5487-424b-b56d-e7502cb0a2ce",
+        "poster": "https://imagedelivery.net/DAh_J1-4YW-zMNrkcEnK_w/5f9d6516-e5e5-4bfd-4616-a1209e605200/public",
+        "subtitle": "MT - 모두 잠든 방에서",
+        "summary": "오기 싫었던 대학교 MT였다. 잘 마시지도 못하는 술을 마시고 MT에 온 걸 후회하며 방에서 자고 있었다. 얼마나 지났을까? 밖에서 시끄럽게 떠드는 소리에 잠에서 깼다. MT에 온 걸 후회하며 불편한 자세를 고치려 몸을 뒤척이는데 내 코앞에 잠에 든 그의 얼굴이 보인다. 내가 MT에 온 이유인 그가. 그때, 그가 뒤척이며 내게 가까이 붙는다.",
+        "synopsis":  {
+          "genres":  [
+            "여+남",
+            "엠티",
+            "ASMR",
+          ],
+          "title": "MT - 모두 잠든 방에서",
+        },
+        "updatedAt": "1648639404398",
+      },
+       {
+        "__typename": "Story",
+        "id": "dcefae97-7d69-4327-a978-818945f1d2f9",
+        "poster": "https://imagedelivery.net/DAh_J1-4YW-zMNrkcEnK_w/5f9d6516-e5e5-4bfd-4616-a1209e605200/public",
+        "subtitle": "우리 이러다 지각해",
+        "summary": "결혼한 지 4개월. 결혼 전이나 후나 여전히 우린 뜨겁다. 퇴근하고 집에 와서 한 번. 자기 전에 또 한 번. 아침에 눈 뜨자마자 한 번. 하루에 세 네 번 해도 모자라지만 우린 출근이란 걸 해야 한다. 그렇게 오늘도 눈 뜨자마자 한 뒤 씻으러 들어갔는데 여보가 같이 씻자며 쫓아 들어왔다. '근데.. 여보 이렇게 귀여우면 내가 어떻게 참아.'",
+        "synopsis":  {
+          "genres":  [
+            "남+나",
+            "신혼부부",
+            "샤워",
+          ],
+          "title": "우리 이러다 지각해",
+        },
+        "updatedAt": "1648125138396",
+      },
+       {
+        "__typename": "Story",
+        "id": "bff50444-1287-4c8f-b551-f6dce57efe3b",
+        "poster": "https://imagedelivery.net/DAh_J1-4YW-zMNrkcEnK_w/001f80d9-b2db-4596-d8f1-e60c17c81900/large",
+        "subtitle": "2화. 그저 먼발치에서라도.",
+        "summary": "형수님이 원하는 게 이것 아니었습니까? 과거는 과거고 이번은 형수님이 먼저 시작했습니다. 그러면 어쩌자고요. 대책도 없이 시작했습니까? 나를 이용했단 말이군요. 형수님의 그 욕망에 못 이겨...",
+        "synopsis":  {
+          "genres":  [
+            "여+남",
+            "불륜",
+            "시대물",
+          ],
+          "id": "348f8911-4b74-40fa-883d-8fd5505e0a15",
+          "title": "도련님, 들어갈게요",
+        },
+        "updatedAt": "1654002078325",
+      },
+       {
+        "__typename": "Story",
+        "id": "ed40c12b-4d7b-4f52-a547-63ced965def4",
+        "poster": "https://imagedelivery.net/DAh_J1-4YW-zMNrkcEnK_w/5f9d6516-e5e5-4bfd-4616-a1209e605200/public",
+        "subtitle": "거기 말고 여기",
+        "summary": "수납장 조립을 도와주러 갔다. 조립을 해준 대가로 치킨을 사준다는 여사친. 치킨에는 맥주가 빠질 수 없지! 근데 치킨이 오기 전까지 시간이 좀 남았는데 계속 어깨를 툭툭 치는 여사친을 보니 괜히 안쓰러워져서 마사지를 해준다고 했다. 근데... 너 왜 자꾸 이상한 소리 내? 야한 소리 내고 있잖아..!",
+        "synopsis":  {
+          "genres":  [
+            "남+나",
+            "마사지",
+            "남사친",
+          ],
+          "title": "거기 말고 여기",
+        },
+        "updatedAt": "1649075548920",
+      },
+    ],
+    "page": 1,
+  },
+   {
+    "list":  [
+       {
+        "__typename": "Story",
+        "id": "595bbe56-8dc6-4883-8079-34ad25bfc20f",
+        "poster": "https://imagedelivery.net/DAh_J1-4YW-zMNrkcEnK_w/5f9d6516-e5e5-4bfd-4616-a1209e605200/public",
+        "subtitle": "들켜버린 남자친구",
+        "summary": "요즘 너무 바빴다. 하지만 이런 와중에도 내 몸은 나와는 다른 생각인가 보다. 한동안 못한 탓인지 시도 때도 없이 커져버리는 내 친구를 감당하기 힘들어서 혼자서 해결하고 있는데 갑자기 여자친구에게 전화가 왔다. 응? 집 앞이라고? 아니, 문 앞이라고?! 난 부랴부랴 옷을 입고 문을 열었다. 아무것도 안 했어. 진짜야... 아니, 잠깐만! 방에 왜 들어가!",
+        "synopsis":  {
+          "genres":  [
+            "남+나",
+            "관음",
+            "자위",
+          ],
+          "title": "들켜버린 남자친구",
+        },
+        "updatedAt": "1649077646511",
+      },
+       {
+        "__typename": "Story",
+        "id": "e73d9a00-3a96-4b09-8e4a-9a5b2f26ba50",
+        "poster": "https://imagedelivery.net/DAh_J1-4YW-zMNrkcEnK_w/5f9d6516-e5e5-4bfd-4616-a1209e605200/public",
+        "subtitle": "루머",
+        "summary": "늘 단정하게 차려입고 다니고.. 생긴 것도 예쁘장하고.. 항상 과탑까지 하면서.. 아빠가 유명한 조폭이라는 차수혁. 그 미스매치가 내 관심을 끌었다. 난 그 소문이 사실인지 아닌지 확인하고 싶었다. 과 회식이 있던 날. 난 술에 취한 척 끝까지 남았고 결국 차수혁과 나만 남았다. 택시 태워 보내려는 걸 토하는 척하면서 막았더니 결국 자신의 집으로 데려갔다.",
+        "synopsis":  {
+          "genres":  [
+            "여+남",
+            "남공여공",
+            "거울",
+          ],
+          "title": "루머",
+        },
+        "updatedAt": "1648731193468",
+      },
+       {
+        "__typename": "Story",
+        "id": "d8604fad-2b1a-431c-a999-70ef45aa72bb",
+        "poster": "https://imagedelivery.net/DAh_J1-4YW-zMNrkcEnK_w/5f9d6516-e5e5-4bfd-4616-a1209e605200/public",
+        "subtitle": "꿈 속 그 녀석",
+        "summary": "꿈 때문에 하루 종일 멍하다. 아무리 내가 연애를 안 한 지 한참 됐다 해도... 왜 이준혁이 꿈에 나오지? 알고 지낸 지 6년이나 되고 볼 꼴 못 볼 꼴 다 본 사이인데 왜 그런 꿈을 꾸는 거지? 나 진짜 욕구불만인가? 며칠째 반복되는 때문에 정신없어 죽겠는데 얘는 이런 내 상태도 모르고 신입생 중에 괜찮은 애가 있다며 신입생 환영회를 가자고 난리다.",
+        "synopsis":  {
+          "genres":  [
+            "여+남",
+            "남사친",
+            "동기",
+          ],
+          "id": "49edc3e3-762d-41c6-9aa9-b5204eecc2c2",
+          "title": "꿈 속 그 녀석",
+        },
+        "updatedAt": "1622306219750",
+      },
+       {
+        "__typename": "Story",
+        "id": "5a633888-d060-4f04-b4ce-73aba8eb0f64",
+        "poster": "https://imagedelivery.net/DAh_J1-4YW-zMNrkcEnK_w/5f9d6516-e5e5-4bfd-4616-a1209e605200/public",
+        "subtitle": "오픈 마인드",
+        "summary": "대학 선배이자 토이샵을 운영하는 정호에게 몇 가지 토이를 샀었던 아영. 하지만 아영은 토이 때문에 남자친구랑 헤어지게 됐다. 복잡한 마음에 아영은 정호를 만나 이런저런 얘기를 나누다 정호에게 말한다. '아 진짜 궁금해요. 토이를 100프로 잘 쓰면 어떤 기분인지... 혹시, 선배가 알려줄 생각 없어요? 마음 좀 열고... 오픈 마인드.'",
+        "synopsis":  {
+          "genres":  [
+            "여+남",
+            "토이",
+            "선배",
+          ],
+          "title": "오픈 마인드",
+        },
+        "updatedAt": "1641647162195",
+      },
+       {
+        "__typename": "Story",
+        "id": "13b4621c-ed26-40d8-b020-56ea5184eccf",
+        "poster": "https://imagedelivery.net/DAh_J1-4YW-zMNrkcEnK_w/5f9d6516-e5e5-4bfd-4616-a1209e605200/public",
+        "subtitle": "2화. 사람 없는 곳에선 뭐든. (완)",
+        "summary": "점심시간, 탕비실에서 나는 남자친구가 사 온 커피와 샌드위치를 먹고 있었다. 근데 남자친구가 '그건 안 물어봐? 왜 난 아무것도 안 먹냐고. 난 다른 걸 먹고 싶어서.'라고 말했다. 그리고 우린 비상계단으로 향했다.",
+        "synopsis": Objec...(truncated to the first 10000 characters)
+       }
+      ]
+      }
+
+      
+]
