@@ -1,28 +1,50 @@
 import React, { useEffect, useState } from "react";
-import { Text,Dimensions,StyleSheet,View,TouchableOpacity,Image } from "react-native";
+import {
+  Text,
+  Dimensions,
+  StyleSheet,
+  View,
+  TouchableOpacity,
+  Image,
+} from "react-native";
 import { SwiperFlatList } from "react-native-swiper-flatlist";
 import styled, { css } from "styled-components/native";
 import axios from "axios";
 import { LinearGradient } from "expo-linear-gradient";
+import SynopsisDefault from "../components/SynopsisDefault";
+import StoryChart from "../components/StoryChart";
 
 const Home = () => {
   const [slides, setSlides] = useState([]);
+  const [cate, setCate] = useState([]);
+  const [syDefault, setSyDefault] = useState([]);
+  const [stChart, setStChart] = useState(false);
+  const [syGrid, setSyGrid] = useState([]);
+  const [syFull, setSyFull] = useState([]);
+
+  const AUTH_TOKEN =
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Mywicm9sZSI6IlVTRVIiLCJpYXQiOjE2NTUwOTgyNjgsImV4cCI6MTY1NjMwNzg2OH0.eCh9VGnV9_iGQFrdzotCtBr-z3hYFeIQ0By9Zzlf2Pc";
 
   const getMainApi = async () => {
     try {
-      const AUTH_TOKEN =
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Mywicm9sZSI6IlVTRVIiLCJpYXQiOjE2NTUwOTgyNjgsImV4cCI6MTY1NjMwNzg2OH0.eCh9VGnV9_iGQFrdzotCtBr-z3hYFeIQ0By9Zzlf2Pc";
       axios.defaults.baseURL = "https://api.plingcast.co.kr/api/v1/";
       axios.defaults.headers.common["Authorization"] = `Bearer ${AUTH_TOKEN}`;
       axios.defaults.headers.post["Content-Type"] = "application/json";
       axios.defaults.headers.post["X-Requested-With"] = "XMLHttpRequest";
-      const result = await axios.get("test-slides");
-      if (result) {
-        //setSlides(result?.data?.data ?? []);
-        setSlides(result?.data?.data ? result.data.data:[]);
+      const [slidesResult, cateResult] = await Promise.all([
+        axios.get("test-slides"),
+        axios.get("test-categories"),
+      ]);
+
+      if (slidesResult) {
+        console.log("slidesResult.status", slidesResult.status);
+        setSlides(slidesResult?.data?.data ?? []);
       }
 
-      console.log("api :>> ", slides);
+      if (cateResult) {
+        console.log("cateResult.status", cateResult.status);
+        setCate(cateResult?.data?.data ?? []);
+      }
     } catch (error) {
       console.log("error :>> ", error);
     }
@@ -30,62 +52,97 @@ const Home = () => {
 
   useEffect(() => {
     getMainApi();
-    // console.log('slides[0] :>> ', slides[0]);
   }, []);
 
-  return (
-    <Container>
-      <View style={styles.container}>
-        <SwiperFlatList
-          showPagination
-          paginationStyle={{ left: 10, zIndex: 10 }}
-          paginationStyleItem={{
-            backgroundColor: "rgb(119, 119, 119)",
-            width: 11,
-            height: 4,
-            borderRadius: 10,
-            marginLeft: 0,
-            marginRight: 5,
-          }}
-          paginationStyleItemActive={{ backgroundColor: "rgb(46, 239, 170)" }}
-        >
-          {slides &&
-            slides.map((slides, i) => (
-              <TouchableOpacity style={styles} key={i}>
-                <LinearGradient
-                  start={{ x: 1, y: 1 }}
-                  end={{ x: 1, y: 0.5 }}
-                  colors={["rgba(0,0,0,1)", "transparent"]}
-                >
-                  <Image
-                    style={styles.posterImage}
-                    source={{ uri: slides.poster }}
-                  ></Image>
-                </LinearGradient>
+  useEffect(() => {
+    setSyDefault(
+      cate.filter((val) => {
+        return val.listType === "SYNOPSIS_DEFAULT";
+      })
+    );
+    setStChart(
+      cate.filter((val) => {
+        return val.listType === "STORY_CHART";
+      })
+    );
+    setSyGrid(
+      cate.filter((val) => {
+        return val.listType === "SYNOPSIS_GRID";
+      })
+    );
+    setSyFull(
+      cate.filter((val) => {
+        return val.listType === "SYNOPSIS_FULL";
+      })
+    );
+    setTimeout(() => {
+      console.log("1초 후 ");
+    }, 1000);
+  }, [cate]);
+
+  const mainSlide = () => (
+    <View style={styles.container}>
+      <SwiperFlatList
+        showPagination
+        paginationStyle={{ left: 10, zIndex: 10 }}
+        paginationStyleItem={{
+          backgroundColor: "rgb(119, 119, 119)",
+          width: 11,
+          height: 4,
+          borderRadius: 10,
+          marginLeft: 0,
+          marginRight: 5,
+        }}
+        paginationStyleItemActive={{ backgroundColor: "rgb(46, 239, 170)" }}
+      >
+        {slides &&
+          slides.map((slides, i) => (
+            <TouchableOpacity style={styles} key={i}>
+              <LinearGradient
+                start={{ x: 1, y: 1 }}
+                end={{ x: 1, y: 0.5 }}
+                colors={["rgba(0,0,0,1)", "transparent"]}
+              >
                 <Image
-                  style={styles.titleImage}
-                  source={{ uri: slides.titleImage }}
+                  style={styles.posterImage}
+                  source={{ uri: slides.poster }}
                 ></Image>
-                <View style={[styles.child]}>
-                  <Text style={styles.summary}>{slides.summary}</Text>
-                  <Text style={styles.genres}>{slides.genres}</Text>
-                </View>
-              </TouchableOpacity>
-            ))}
-        </SwiperFlatList>
-      </View>
-    </Container>
+              </LinearGradient>
+              <View style={[styles.child]}>
+                <Text style={styles.summary}>{slides.summary}</Text>
+                <Text style={styles.genres}>{slides.genres.join(" · ")}</Text>
+              </View>
+            </TouchableOpacity>
+          ))}
+      </SwiperFlatList>
+    </View>
+  );
+
+  return (
+    <SafeAreaView>
+      <FlatListContainer
+        ListHeaderComponent={mainSlide}
+        data={[0]}
+        renderItem={() => (
+          <>
+            <SynopsisDefault syDefault={syDefault}></SynopsisDefault>
+            {stChart && <StoryChart stChart={stChart}></StoryChart>}
+          </>
+        )}
+        //keyExtractor={(item) => item.id}
+      />
+    </SafeAreaView>
   );
 };
-
-const Container = styled.View`
+const SafeAreaView = styled.SafeAreaView`
   background-color: #000;
 `;
+const FlatListContainer = styled.FlatList``;
 // const PosterImage = styled.Image`
-// width:100%;
-// height:400px;
-// background: linear-gradient(red,black);
-// `
+//   width: 100%;
+//   height: 400px;
+//   background: linear-gradient(red, black);
+// `;
 const { width } = Dimensions.get("window");
 const { height } = Dimensions.get("window");
 const styles = StyleSheet.create({
