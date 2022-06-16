@@ -1,6 +1,6 @@
 import React from "react";
 import styled, { css } from "styled-components/native";
-
+import { Dimensions } from "react-native";
 const ChartCard = ({ poster, title, genres, ListNumber }) => {
   return (
     <Card>
@@ -19,7 +19,8 @@ const Card = styled.View`
   flex-direction: row;
   align-items: center;
   height: 70px;
-  margin: 8px 8px 8px 0px;
+  margin: 8px 0px 8px 0px;
+  width: ${Dimensions.get("window").width}px;
 `;
 
 const CardInner = styled.View`

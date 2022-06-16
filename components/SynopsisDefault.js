@@ -3,15 +3,13 @@ import styled, { css } from "styled-components/native";
 import DefaultCard from "./card/DefaultCard";
 
 const SynopsisDefault = ({ syDefault }) => {
-  //console.log("무료", syDefault[0]?.list);
-
   return (
     <Container>
-      <HeaderTitle>{syDefault[0]?.title}</HeaderTitle>
+      <HeaderTitle>{syDefault?.title}</HeaderTitle>
       {syDefault && (
         <SynopsisSlide
           horizontal
-          data={syDefault[0]?.list}
+          data={syDefault?.list}
           renderItem={({ item }) => (
             <DefaultCard
               poster={item.poster}

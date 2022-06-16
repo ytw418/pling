@@ -13,7 +13,7 @@ const DefaultCard = ({ poster, title, genres }) => {
 
 const Card = styled.View`
   width: 180px;
-  height: 180px;
+  height: 220px;
 
   margin: 8px 10px 8px 0px;
 `;
@@ -27,8 +27,8 @@ const CardContent = styled.Text`
   color: gray;
 `;
 const Image = styled.Image`
-  width: 100%;
-  height: 100%;
+  width: 180px;
+  height: 180px;
   border-radius: 15px;
 `;
 export default DefaultCard;

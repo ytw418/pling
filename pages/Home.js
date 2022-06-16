@@ -7,29 +7,24 @@ import {
   TouchableOpacity,
   Image,
 } from "react-native";
-import { PAGE_SIZE } from "../constants";
 import { SwiperFlatList } from "react-native-swiper-flatlist";
 import styled, { css } from "styled-components/native";
 import axios from "axios";
 import { LinearGradient } from "expo-linear-gradient";
 import SynopsisDefault from "../components/SynopsisDefault";
 import StoryChart from "../components/StoryChart";
+import getEnvVars from "../environment";
+import SyGrid from "../components/SyGrid";
 
 const Home = () => {
+  const { APIURL, APIKEY } = getEnvVars();
   const [slides, setSlides] = useState([]);
   const [cate, setCate] = useState([]);
-  const [syDefault, setSyDefault] = useState([]);
-  const [stChart, setStChart] = useState([]);
-  const [syGrid, setSyGrid] = useState([]);
-  const [syFull, setSyFull] = useState([]);
-
-  // const {constants} = constants();
-  const AUTH_TOKEN =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Mywicm9sZSI6IlVTRVIiLCJpYXQiOjE2NTUwOTgyNjgsImV4cCI6MTY1NjMwNzg2OH0.eCh9VGnV9_iGQFrdzotCtBr-z3hYFeIQ0By9Zzlf2Pc";
+  const AUTH_TOKEN = APIKEY;
 
   const getMainApi = async () => {
     try {
-      axios.defaults.baseURL = "https://api.plingcast.co.kr/api/v1/";
+      axios.defaults.baseURL = APIURL;
       axios.defaults.headers.common["Authorization"] = `Bearer ${AUTH_TOKEN}`;
       axios.defaults.headers.post["Content-Type"] = "application/json";
       axios.defaults.headers.post["X-Requested-With"] = "XMLHttpRequest";
@@ -59,30 +54,6 @@ const Home = () => {
       getMainApi();
     };
   }, []);
-
-  useEffect(() => {
-    setSyDefault(
-      cate.filter((val) => {
-        return val.listType === "SYNOPSIS_DEFAULT";
-      })
-    );
-    setStChart(
-      cate.filter((val) => {
-        return val.listType === "STORY_CHART";
-      })
-    );
-    setSyGrid(
-      cate.filter((val) => {
-        return val.listType === "SYNOPSIS_GRID";
-      })
-    );
-    setSyFull(
-      cate.filter((val) => {
-        return val.listType === "SYNOPSIS_FULL";
-      })
-    );
-    console.log("stChart", stChart);
-  }, [cate]);
 
   const mainSlide = () => (
     <View style={styles.container}>
@@ -127,16 +98,18 @@ const Home = () => {
       <SafeAreaView>
         <FlatListContainer
           ListHeaderComponent={mainSlide}
-          data={[0]}
-          renderItem={() => (
-            <>
-              <SynopsisDefault syDefault={syDefault}></SynopsisDefault>
-              {stChart.length !== 0 && (
-                <StoryChart stChart={stChart}></StoryChart>
-              )}
-            </>
-          )}
-          //keyExtractor={(item) => item.id}
+          data={cate}
+          renderItem={(item) =>
+            (item.item.listType === "SYNOPSIS_DEFAULT" && (
+              <SynopsisDefault syDefault={item?.item}></SynopsisDefault>
+            )) ||
+            (item.item.listType === "STORY_CHART" && (
+              <StoryChart stChart={item?.item}></StoryChart>
+            )) ||
+            (item.item.listType === "SYNOPSIS_GRID" && (
+              <SyGrid syGrid={item?.item}></SyGrid>
+            ))
+          }
         />
       </SafeAreaView>
     )
@@ -155,7 +128,7 @@ const { width } = Dimensions.get("window");
 const { height } = Dimensions.get("window");
 const styles = StyleSheet.create({
   slide: { position: "relative" },
-  container: { flex: 1, backgroundColor: "#000" },
+  container: { flex: 1, backgroundColor: "#000", width: width },
   child: { width },
   summary: {
     fontSize: 13,
