@@ -7,13 +7,13 @@ import getEnvVars from "../environment";
 import SyGrid from "../components/SyGrid";
 import SyFull from "../components/SyFull";
 import MainSlide from "../components/MainSlide";
+import { useApiState, useDispatch } from "../ContextAPI";
 
 const Home = () => {
   const { APIURL, APIKEY } = getEnvVars();
-  const [slides, setSlides] = useState([]);
-  const [cate, setCate] = useState([]);
+  const dispatch = useDispatch();
+  const state = useApiState();
   const AUTH_TOKEN = APIKEY;
-
   const getMainApi = async () => {
     try {
       axios.defaults.baseURL = APIURL;
@@ -27,12 +27,18 @@ const Home = () => {
 
       if (slidesResult) {
         console.log("slidesResult.status", slidesResult.status);
-        setSlides(slidesResult?.data?.data ?? []);
+        dispatch({
+          type: "HOME_LODGING_SLIDES",
+          slides: slidesResult?.data?.data,
+        });
       }
 
       if (cateResult) {
         console.log("cateResult.status", cateResult.status);
-        setCate(cateResult?.data?.data ?? []);
+        dispatch({
+          type: "HOME_LODGING_CATE",
+          cate: cateResult?.data?.data,
+        });
       }
     } catch (error) {
       console.log("error :>> ", error);
@@ -48,11 +54,11 @@ const Home = () => {
   }, []);
 
   return (
-    slides !== [] && (
+    state?.home && (
       <SafeAreaView>
         <FlatListContainer
-          ListHeaderComponent={MainSlide(slides)}
-          data={cate}
+          ListHeaderComponent={MainSlide(state?.home?.slides ?? [])}
+          data={state?.home?.cate ?? []}
           renderItem={(item) =>
             (item.item?.listType === "SYNOPSIS_DEFAULT" && (
               <SynopsisDefault syDefault={item?.item}></SynopsisDefault>
@@ -74,6 +80,7 @@ const Home = () => {
 };
 const SafeAreaView = styled.SafeAreaView`
   background-color: #000;
+  color: red;
 `;
 const FlatListContainer = styled.FlatList``;
 

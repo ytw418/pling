@@ -48,7 +48,6 @@ const MainSlide = (slides) => (
 );
 
 const { width } = Dimensions.get("window");
-const { height } = Dimensions.get("window");
 const styles = StyleSheet.create({
   slide: { position: "relative" },
   container: { flex: 1, backgroundColor: "#000", width: width },
