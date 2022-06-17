@@ -1,6 +1,6 @@
 import React from "react";
 import styled, { css } from "styled-components/native";
-
+import { DEFAULT_CARD_WIDTH } from "../../constants";
 const DefaultCard = ({ poster, title, genres }) => {
   return (
     <Card>
@@ -12,10 +12,8 @@ const DefaultCard = ({ poster, title, genres }) => {
 };
 
 const Card = styled.View`
-  width: 180px;
-  height: 220px;
-
-  margin: 8px 10px 8px 0px;
+  width: ${DEFAULT_CARD_WIDTH}px;
+  margin: 8px 0px 8px 0px;
 `;
 
 const CardTitle = styled.Text`
@@ -27,8 +25,8 @@ const CardContent = styled.Text`
   color: gray;
 `;
 const Image = styled.Image`
-  width: 180px;
-  height: 180px;
+  width: ${DEFAULT_CARD_WIDTH}px;
+  height: ${DEFAULT_CARD_WIDTH}px;
   border-radius: 15px;
 `;
 export default DefaultCard;

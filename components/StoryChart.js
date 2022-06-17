@@ -50,6 +50,7 @@ const Container = styled.View`
   background: #000;
   //margin: 10px;
   height: 500px;
+  padding: 0px 10px 0px 10px;
 `;
 const HeaderTitle = styled.Text`
   font-size: 18px;

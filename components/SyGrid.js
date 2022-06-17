@@ -1,7 +1,7 @@
 import React from "react";
 import styled, { css } from "styled-components/native";
 import DefaultCard from "./card/DefaultCard";
-import { Alert } from "react-native";
+
 
 const SyGrid = (syGrid) => {
   console.log("s그리드드드드드드드드드ㅡㅡ드드", syGrid.syGrid.title);
@@ -9,25 +9,24 @@ const SyGrid = (syGrid) => {
     <Container>
       <HeaderTitle>{syGrid.syGrid.title}</HeaderTitle>
       <GridInner>
-      {syGrid?.syGrid &&
-        syGrid?.syGrid?.list?.map((item,i) => (
-          <DefaultCard
-          key={i}
-            poster={item.poster}
-            title={item.title}
-            genres={item.genres}
-          ></DefaultCard>
-        ))}
-        </GridInner>
+        {syGrid?.syGrid &&
+          syGrid?.syGrid?.list?.map((item, i) => (
+            <DefaultCard
+              key={i}
+              poster={item.poster}
+              title={item.title}
+              genres={item.genres}
+            ></DefaultCard>
+          ))}
+      </GridInner>
     </Container>
   );
 };
 
 const Container = styled.View`
-margin-bottom: 30px;
-display: flex;
-
-
+  margin-bottom: 30px;
+  display: flex;
+  padding: 0px 10px 0px 10px;
 `;
 const HeaderTitle = styled.Text`
   font-size: 18px;
@@ -35,13 +34,11 @@ const HeaderTitle = styled.Text`
 `;
 
 const GridInner = styled.View`
-display: flex;
-flex-direction: row;
-flex-wrap: wrap;
-justify-content: center;
-align-items: center;
-
-`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  flex-wrap: wrap;
+`;
 
 const Text = styled.Text`
   color: #fff;

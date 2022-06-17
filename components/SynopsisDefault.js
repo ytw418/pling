@@ -11,11 +11,13 @@ const SynopsisDefault = ({ syDefault }) => {
           horizontal
           data={syDefault?.list}
           renderItem={({ item }) => (
-            <DefaultCard
-              poster={item.poster}
-              title={item.title}
-              genres={item.genres}
-            />
+            <CardMargin>
+              <DefaultCard
+                poster={item.poster}
+                title={item.title}
+                genres={item.genres}
+              />
+            </CardMargin>
           )}
         ></SynopsisSlide>
       )}
@@ -25,34 +27,16 @@ const SynopsisDefault = ({ syDefault }) => {
 
 const Container = styled.View`
   background: #000;
-  margin: 10px;
   height: 300px;
+  padding: 0px 10px 0px 10px;
 `;
 const HeaderTitle = styled.Text`
   font-size: 18px;
   color: #fff;
 `;
 const SynopsisSlide = styled.FlatList``;
-
-const Card = styled.View`
-  width: 180px;
-  height: 180px;
-
-  margin: 8px 10px 8px 0px;
-`;
-
-const CardTitle = styled.Text`
-  font-size: 14px;
-  color: #fff;
-`;
-const CardContent = styled.Text`
-  font-size: 13px;
-  color: gray;
-`;
-const Image = styled.Image`
-  width: 100%;
-  height: 100%;
-  border-radius: 15px;
+const CardMargin = styled.View`
+  margin-right: 10px;
 `;
 
 export default SynopsisDefault;
