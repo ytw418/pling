@@ -8,12 +8,15 @@ import SyGrid from "../components/SyGrid";
 import SyFull from "../components/SyFull";
 import MainSlide from "../components/MainSlide";
 import { useApiState, useDispatch } from "../ContextAPI";
-
-const Home = () => {
+import HomeHeader from "../components/header/HomeHeader";
+const Home = ({ navigation, route }) => {
   const { APIURL, APIKEY } = getEnvVars();
   const dispatch = useDispatch();
   const state = useApiState();
   const AUTH_TOKEN = APIKEY;
+
+  useEffect(() => {}, []);
+
   const getMainApi = async () => {
     try {
       axios.defaults.baseURL = APIURL;
@@ -56,12 +59,16 @@ const Home = () => {
   return (
     state?.home && (
       <SafeAreaView>
+        <HomeHeader navigation={navigation}></HomeHeader>
         <FlatListContainer
           ListHeaderComponent={MainSlide(state?.home?.slides ?? [])}
           data={state?.home?.cate ?? []}
           renderItem={(item) =>
             (item.item?.listType === "SYNOPSIS_DEFAULT" && (
-              <SynopsisDefault syDefault={item?.item}></SynopsisDefault>
+              <SynopsisDefault
+                navigation={navigation}
+                syDefault={item?.item}
+              ></SynopsisDefault>
             )) ||
             (item.item?.listType === "STORY_CHART" && (
               <StoryChart stChart={item?.item}></StoryChart>

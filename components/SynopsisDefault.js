@@ -2,7 +2,7 @@ import React from "react";
 import styled, { css } from "styled-components/native";
 import DefaultCard from "./card/DefaultCard";
 
-const SynopsisDefault = ({ syDefault }) => {
+const SynopsisDefault = ({ syDefault, navigation }) => {
   return (
     <Container>
       <HeaderTitle>{syDefault?.title}</HeaderTitle>
@@ -13,9 +13,12 @@ const SynopsisDefault = ({ syDefault }) => {
           renderItem={({ item }) => (
             <CardMargin>
               <DefaultCard
-                poster={item.poster}
-                title={item.title}
-                genres={item.genres}
+                navigation={navigation}
+                id={item?.id}
+                poster={item?.poster}
+                title={item?.title}
+                genres={item?.genres}
+                active={item?.active ?? false}
               />
             </CardMargin>
           )}

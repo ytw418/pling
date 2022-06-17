@@ -4,13 +4,14 @@ import BottomTab from "./navigation/BottomTab";
 import styled, { ThemeProvider } from "styled-components";
 import theme from "./theme";
 import { Provider } from "./ContextAPI";
+import StackNavigator from "./navigation/StackNavigator";
 export default function App() {
   return (
     <Provider>
       <ThemeProvider theme={theme}>
         <NavigationContainer>
           <StatusBar style="black" />
-          <BottomTab />
+          <StackNavigator></StackNavigator>
         </NavigationContainer>
       </ThemeProvider>
     </Provider>

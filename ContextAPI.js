@@ -1,4 +1,5 @@
 import React, { useState, useReducer, createContext, useContext } from "react";
+import produce from "immer";
 
 const initials = {
   home: {
@@ -20,11 +21,21 @@ function Reducer(state, action) {
         ...state,
         home: { ...state.home, cate: action.cate },
       };
-    case "CREATE_USER":
-      return {
-        ...state,
-        User: { [action.user.Profile.Uid]: action.user },
-      };
+    case "CARD_LIKE":
+      return produce(state, (draft) => {
+        const target = draft.home.cate.find((data) =>
+          data.list.find((obj) => obj.id === action.id)
+        );
+        const targetObj = target.list.find((obj) => obj.id === action.id);
+        targetObj.title = "asdasdasd";
+        targetObj.active = !targetObj.active;
+      });
+
+    // return {
+    //   ...state,home.cate:{}
+    //  home: { ...state.home, cate: {...state.home.cate} },
+
+    // };
     case "textSend":
       return { ...state, text: action.text };
 
