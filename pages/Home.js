@@ -9,6 +9,8 @@ import SyFull from "../components/SyFull";
 import MainSlide from "../components/MainSlide";
 import { useApiState, useDispatch } from "../ContextAPI";
 import HomeHeader from "../components/header/HomeHeader";
+import ListLoading from "../components/loading/ListLoading";
+import SlideLoading from "../components/loading/SlideLoading";
 const Home = ({ navigation, route }) => {
   const { APIURL, APIKEY } = getEnvVars();
   const dispatch = useDispatch();
@@ -57,32 +59,36 @@ const Home = ({ navigation, route }) => {
   }, []);
 
   return (
-    state?.home && (
-      <SafeAreaView>
-        <HomeHeader navigation={navigation}></HomeHeader>
-        <FlatListContainer
-          ListHeaderComponent={MainSlide(state?.home?.slides ?? [])}
-          data={state?.home?.cate ?? []}
-          renderItem={(item) =>
-            (item.item?.listType === "SYNOPSIS_DEFAULT" && (
+    <SafeAreaView>
+      <HomeHeader navigation={navigation}></HomeHeader>
+      <FlatListContainer
+        ListHeaderComponent={
+          state?.home?.slides ? MainSlide(state?.home?.slides) : SlideLoading()
+        }
+        data={state?.home?.cate ? state?.home?.cate : [1]}
+        renderItem={(item) =>
+          item.item === 1 ? (
+            <ListLoading></ListLoading>
+          ) : (
+            (item?.item?.listType === "SYNOPSIS_DEFAULT" && (
               <SynopsisDefault
                 navigation={navigation}
                 syDefault={item?.item}
               ></SynopsisDefault>
             )) ||
-            (item.item?.listType === "STORY_CHART" && (
+            (item?.item?.listType === "STORY_CHART" && (
               <StoryChart stChart={item?.item}></StoryChart>
             )) ||
-            (item.item?.listType === "SYNOPSIS_GRID" && (
+            (item?.item?.listType === "SYNOPSIS_GRID" && (
               <SyGrid syGrid={item?.item}></SyGrid>
             )) ||
-            (item.item?.listType === "SYNOPSIS_FULL" && (
+            (item?.item?.listType === "SYNOPSIS_FULL" && (
               <SyFull syFull={item?.item}></SyFull>
             ))
-          }
-        />
-      </SafeAreaView>
-    )
+          )
+        }
+      />
+    </SafeAreaView>
   );
 };
 const SafeAreaView = styled.SafeAreaView`

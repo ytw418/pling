@@ -3,8 +3,8 @@ import React from "react";
 import { Text, Dimensions, StyleSheet, View, Image } from "react-native";
 import { SwiperFlatList } from "react-native-swiper-flatlist";
 import styled, { css } from "styled-components/native";
-
 import { LinearGradient } from "expo-linear-gradient";
+const img404 = require("../images/404img.png");
 const MainSlide = (slides) => (
   <View style={styles.container}>
     <SwiperFlatList
@@ -20,36 +20,41 @@ const MainSlide = (slides) => (
       }}
       paginationStyleItemActive={{ backgroundColor: "rgb(46, 239, 170)" }}
     >
-      {slides &&
-        slides.map((slides, i) => (
-          <View style={styles} key={i}>
-            <LinearGradient
-              start={{ x: 1, y: 1 }}
-              end={{ x: 1, y: 0.5 }}
-              colors={["rgba(0,0,0,1)", "transparent"]}
-            >
-              <Image
-                style={styles.posterImage}
-                source={{ uri: slides.poster }}
-              ></Image>
-              <Image
-                style={styles.titleImage}
-                source={{ uri: slides.titleImage }}
-              ></Image>
-            </LinearGradient>
-            <View style={[styles.child]}>
-              <Text style={styles.summary}>{slides.summary}</Text>
-              <Text style={styles.genres}>{slides.genres.join(" · ")}</Text>
-            </View>
+      {slides.map((slides, i) => (
+        <View style={styles.slide} key={i}>
+          <LinearGradient
+            start={{ x: 1, y: 1 }}
+            end={{ x: 1, y: 0.5 }}
+            colors={["rgba(0,0,0,1)", "transparent"]}
+          >
+            <Image
+              style={styles.posterImage}
+              source={slides?.poster ? { uri: slides?.poster } : img404}
+              accessibilityHint="이미지로딩실패"
+            ></Image>
+            <Image
+              style={styles.titleImage}
+              source={{ uri: slides?.titleImage }}
+              accessibilityHint="이미지로딩실패"
+            ></Image>
+          </LinearGradient>
+          <View style={[styles.child]}>
+            <Text style={styles.summary}>{slides?.summary ?? "not found"}</Text>
+            <Text style={styles.genres}>
+              {slides?.genres?.join(" · ") ?? "not found"}
+            </Text>
           </View>
-        ))}
+        </View>
+      ))}
     </SwiperFlatList>
   </View>
 );
 
 const { width } = Dimensions.get("window");
 const styles = StyleSheet.create({
-  slide: { position: "relative" },
+  slide: {
+    position: "relative",
+  },
   container: { flex: 1, backgroundColor: "#000", width: width },
   child: { width },
   summary: {

@@ -5,8 +5,9 @@ import Creator from "../pages/Creator";
 import FlingBox from "../pages/FlingBox";
 import MyDrawer from "../pages/MyDrawer";
 import Detail from "../pages/Detail";
-import A from "../pages/A";
+import PlingPoint from "../pages/PlingPoint";
 import MainScreen from "../navigation/MainScreen";
+import Search from "../pages/Search";
 const Stack = createStackNavigator();
 
 const StackNavigator = () => {
@@ -14,11 +15,11 @@ const StackNavigator = () => {
     <Stack.Navigator
       screenOptions={{
         headerStyle: {
-          backgroundColor: "white",
-          height: 110,
+          backgroundColor: "#000",
+          height: 50,
         },
         headerTitleAlign: "left",
-        headerTintColor: "#000",
+        headerTintColor: "#fff",
         headerBackTitleVisible: false,
       }}
     >
@@ -33,7 +34,8 @@ const StackNavigator = () => {
       <Stack.Screen name="FlingBox" component={FlingBox} />
       <Stack.Screen name="MyDrawer" component={MyDrawer} />
       <Stack.Screen name="Detail" component={Detail} />
-      <Stack.Screen name="A" component={A} />
+      <Stack.Screen name="PlingPoint" component={PlingPoint} />
+      <Stack.Screen name="Search" component={Search} />
     </Stack.Navigator>
   );
 };

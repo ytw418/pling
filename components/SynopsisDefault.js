@@ -5,7 +5,7 @@ import DefaultCard from "./card/DefaultCard";
 const SynopsisDefault = ({ syDefault, navigation }) => {
   return (
     <Container>
-      <HeaderTitle>{syDefault?.title}</HeaderTitle>
+      <HeaderTitle>{syDefault?.title ?? " "}</HeaderTitle>
       {syDefault && (
         <SynopsisSlide
           horizontal

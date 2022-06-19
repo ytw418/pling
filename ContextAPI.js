@@ -2,11 +2,10 @@ import React, { useState, useReducer, createContext, useContext } from "react";
 import produce from "immer";
 
 const initials = {
-  home: {
-    slides: null,
-    cate: null,
-  },
-  asd: "asd",
+  // home: {
+  //   slides: false,
+  //   cate: false,
+  // },
 };
 
 function Reducer(state, action) {
