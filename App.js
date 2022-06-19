@@ -5,6 +5,7 @@ import styled, { ThemeProvider } from "styled-components";
 import theme from "./theme";
 import { Provider } from "./ContextAPI";
 import StackNavigator from "./navigation/StackNavigator";
+
 export default function App() {
   return (
     <Provider>
