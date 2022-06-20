@@ -12,9 +12,12 @@ const SyGrid = (syGrid) => {
           syGrid?.syGrid?.list?.map((item, i) => (
             <DefaultCard
               key={i}
-              poster={item.poster}
-              title={item.title}
-              genres={item.genres}
+              poster={item?.poster}
+              title={item?.title}
+              genres={item?.genres}
+              id={item?.id}
+              active={item?.active ?? false}
+              updatedAt={item?.updatedAt}
             ></DefaultCard>
           ))}
       </GridInner>

@@ -87,13 +87,12 @@ const Home = ({ navigation, route }) => {
     };
   }, []);
 
-  const { data, error } = useQuery(GQL_API, {
-    ...params,
-  });
+  // const { data, error } = useQuery(GQL_API, {
+  //   ...params,
+  // });
 
   return state.home ? (
     <SafeAreaView>
-      {data.list ? FlatList : <EmptyComp />}
       <FlatListContainer
         scrollEventThrottle={16}
         onRefresh={getMainApi}

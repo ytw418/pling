@@ -2,12 +2,14 @@ import React from "react";
 import styled, { css } from "styled-components/native";
 import { Dimensions } from "react-native";
 const ChartCard = ({ poster, title, genres, ListNumber, updatedAt }) => {
+  console.log("Date.now() - updatedAt =", (Date.now() - updatedAt) / 1000);
+
   return (
     <Card>
       <Image source={{ uri: poster }}></Image>
       <ListNumberBlock>
         <CardListNumber>{ListNumber}</CardListNumber>
-        {Date.now() - updatedAt > 8640000 && <NewText>New</NewText>}
+        {(Date.now() - updatedAt) / 1000 < 86400 * 30 && <NewText>New</NewText>}
       </ListNumberBlock>
       <CardInner>
         <CardTitle>{title}</CardTitle>

@@ -19,6 +19,7 @@ const SynopsisDefault = ({ syDefault, navigation }) => {
                 title={item?.title}
                 genres={item?.genres}
                 active={item?.active ?? false}
+                updatedAt={item?.updatedAt}
               />
             </CardMargin>
           )}
