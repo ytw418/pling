@@ -62,6 +62,12 @@ const Home = ({ navigation, route }) => {
     <SafeAreaView>
       <HomeHeader navigation={navigation}></HomeHeader>
       <FlatListContainer
+        onRefresh={getMainApi}
+        refreshing={false}
+        keyExtractor={(item, index) => item + index}
+        initialNumToRender={2}
+        onStartReached={() => console.log("firdddddㄹㄹㄹㄹㄹst")}
+        onEndReached={() => console.log("endpoint")}
         ListHeaderComponent={
           state?.home?.slides ? MainSlide(state?.home?.slides) : SlideLoading()
         }
