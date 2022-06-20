@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import styled, { css } from "styled-components/native";
 import axios from "axios";
 import SynopsisDefault from "../components/SynopsisDefault";
@@ -11,13 +11,16 @@ import { useApiState, useDispatch } from "../ContextAPI";
 import HomeHeader from "../components/header/HomeHeader";
 import ListLoading from "../components/loading/ListLoading";
 import SlideLoading from "../components/loading/SlideLoading";
+import Loading from "../components/loading/Loading";
+import { Animated } from "react-native";
+
 const Home = ({ navigation, route }) => {
   const { APIURL, APIKEY } = getEnvVars();
   const dispatch = useDispatch();
   const state = useApiState();
   const AUTH_TOKEN = APIKEY;
 
-  useEffect(() => {}, []);
+  const offset = new Animated.Value(0);
 
   const getMainApi = async () => {
     try {
@@ -48,26 +51,68 @@ const Home = ({ navigation, route }) => {
     } catch (error) {
       console.log("error :>> ", error);
     }
+    console.log("api호출");
+  };
+  const onHeader = (y) => {
+    Animated.timing(offset, {
+      toValue: y,
+      useNativeDriver: true, //make it as false
+    }).start();
+    console.log("handleAnimation실행");
+  };
+  const removeHeader = (y) => {
+    Animated.timing(offset, {
+      toValue: 0,
+      useNativeDriver: true, //make it as false
+    }).start();
+    console.log("handleAnimation제거");
+  };
+
+  // const boxInterpolation = animation.interpolate({
+  //   inputRange: [0, 1],
+  //   outputRange: ["rgb(90,210,244)", "rgb(224,82,99)"],
+  // });
+
+  const onScroll = (e) => {
+    const { contentSize, layoutMeasurement, contentOffset } = e.nativeEvent;
+    contentOffset.y > 50 && onHeader(contentOffset.y);
+    contentOffset.y === 0 && removeHeader(contentOffset.y);
+    console.log("toValue", offset);
   };
 
   useEffect(() => {
     getMainApi();
-
     return () => {
       getMainApi();
     };
   }, []);
 
-  return (
+  const { data, error } = useQuery(GQL_API, {
+    ...params,
+  });
+
+  return state.home ? (
     <SafeAreaView>
-      <HomeHeader navigation={navigation}></HomeHeader>
+      {data.list ? FlatList : <EmptyComp />}
       <FlatListContainer
+        scrollEventThrottle={16}
         onRefresh={getMainApi}
         refreshing={false}
         keyExtractor={(item, index) => item + index}
         initialNumToRender={2}
-        onStartReached={() => console.log("firdddddㄹㄹㄹㄹㄹst")}
-        onEndReached={() => console.log("endpoint")}
+        onScroll={Animated.event(
+          [
+            {
+              nativeEvent: {
+                contentOffset: {
+                  y: offset,
+                },
+              },
+            },
+          ],
+          { useNativeDriver: false }
+        )}
+        onEndReached={() => console.log("offset", offset)}
         ListHeaderComponent={
           state?.home?.slides ? MainSlide(state?.home?.slides) : SlideLoading()
         }
@@ -94,7 +139,10 @@ const Home = ({ navigation, route }) => {
           )
         }
       />
+      <HomeHeader navigation={navigation} animatedValue={offset}></HomeHeader>
     </SafeAreaView>
+  ) : (
+    <Loading></Loading>
   );
 };
 const SafeAreaView = styled.SafeAreaView`

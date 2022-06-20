@@ -2,8 +2,9 @@ import React from "react";
 import styled, { css } from "styled-components/native";
 import { DEFAULT_CARD_WIDTH } from "../../constants";
 import { TouchableOpacity } from "react-native";
-const DefaultCard = ({ poster, title, genres, id, navigation, active }) => {
-  console.log("active", active);
+import { useNavigation } from "@react-navigation/native";
+const DefaultCard = ({ poster, title, genres, id, active }) => {
+  const navigation = useNavigation();
   return (
     <TouchableOpacity
       onPress={() => {

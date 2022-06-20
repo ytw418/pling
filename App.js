@@ -11,7 +11,7 @@ export default function App() {
     <Provider>
       <ThemeProvider theme={theme}>
         <NavigationContainer>
-          <StatusBar style="black" />
+          <StatusBar style="light" translucent />
           <StackNavigator></StackNavigator>
         </NavigationContainer>
       </ThemeProvider>

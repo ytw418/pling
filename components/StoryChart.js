@@ -36,6 +36,7 @@ const StoryChart = ({ stChart }) => {
                   poster={item?.poster}
                   title={item?.synopsis?.title}
                   genres={item?.synopsis?.genres}
+                  updatedAt={item?.updatedAt}
                 />
               )}
             ></StChartSlide>

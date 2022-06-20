@@ -9,7 +9,7 @@ const Detail = ({ navigation, route }) => {
 
   //console.log("state", state.home.cate);
   return (
-    <Container>
+    <Container forceInset={{ top: "always" }}>
       <ScrollView>
         <Image source={{ uri: poster }}></Image>
         <Text>categoryTitle: {title}</Text>

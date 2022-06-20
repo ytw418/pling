@@ -26,8 +26,7 @@ function Reducer(state, action) {
           data.list.find((obj) => obj.id === action.id)
         );
         const targetObj = target.list.find((obj) => obj.id === action.id);
-        targetObj.title = "asdasdasd";
-        targetObj.active = !targetObj.active;
+        targetObj.active = !targetObj.active; // isLiked
       });
 
     // return {
