@@ -19,7 +19,9 @@ const HomeHeader = ({ navigation, animatedValue }) => {
   }, 4000);
   return (
     <>
-      <AniHeader style={{ opacity: headerOpacity }}></AniHeader>
+      <AniHeader style={{ opacity: headerOpacity }}>
+        <Title>Pling</Title>
+      </AniHeader>
       <Header>
         <Cover
           onPress={() => {
@@ -67,6 +69,15 @@ const AniHeader = styled(Animated.View)`
   width: 100%;
   height: 100px;
   flex: 1;
+  display: flex;
+  padding-top: 40px;
+  align-items: center;
+`;
+
+const Title = styled.Text`
+  color: rgb(46, 239, 170);
+  font-size: 30px;
+  font-weight: bold;
 `;
 
 const Cover = styled.TouchableOpacity`
