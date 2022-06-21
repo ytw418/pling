@@ -6,11 +6,11 @@ import { Entypo } from "@expo/vector-icons";
 import { Animated } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
-const HomeHeader = ({ children, animatedValue }) => {
+const HomeHeader = ({ children, animatedValue, headerTitle = "Pling" }) => {
 	//console.log("contentOffset", contentOffset);
 	const navigation = useNavigation();
 
-	const headerOpacity = animatedValue.interpolate({
+	const headerOpacity = animatedValue?.interpolate({
 		inputRange: [100, 200],
 		outputRange: [0, 1],
 		extrapolate: "clamp",
@@ -20,39 +20,42 @@ const HomeHeader = ({ children, animatedValue }) => {
 	return (
 		<Container>
 			{children}
-			{animatedValue && (
-				<>
-					<AniHeader style={{ opacity: headerOpacity }}>
-						<Title>Pling</Title>
-					</AniHeader>
-					<Header>
-						<Cover
-							onPress={() => {
-								navigation.navigate("PlingPoint");
-							}}
-						>
-							<Entypo
-								name="app-store"
-								style={{ opacity: 1 }}
-								color={"#fff"}
-								size={26}
-							/>
-						</Cover>
-						<Cover
-							onPress={() => {
-								navigation.navigate("Search");
-							}}
-						>
-							<MaterialCommunityIcons
-								style={{ opacity: 1 }}
-								name="magnify"
-								color={"#fff"}
-								size={26}
-							/>
-						</Cover>
-					</Header>
-				</>
+			{animatedValue ? (
+				<AniHeader style={{ opacity: headerOpacity }}>
+					<Title>{headerTitle}</Title>
+				</AniHeader>
+			) : (
+				<AniHeader style={{ opacity: 1 }}>
+					<Title>{headerTitle}</Title>
+				</AniHeader>
 			)}
+
+			<Header>
+				<Cover
+					onPress={() => {
+						navigation.navigate("PlingPoint");
+					}}
+				>
+					<Entypo
+						name="app-store"
+						style={{ opacity: 1 }}
+						color={"#fff"}
+						size={26}
+					/>
+				</Cover>
+				<Cover
+					onPress={() => {
+						navigation.navigate("Search");
+					}}
+				>
+					<MaterialCommunityIcons
+						style={{ opacity: 1 }}
+						name="magnify"
+						color={"#fff"}
+						size={26}
+					/>
+				</Cover>
+			</Header>
 		</Container>
 	);
 };

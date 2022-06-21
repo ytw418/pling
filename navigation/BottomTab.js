@@ -21,7 +21,6 @@ function BottomTab() {
 				},
 				tabBarActiveTintColor: "#fff",
 				headerShown: false,
-				headerBackTitleVisible: false,
 			}}
 		>
 			<Tab.Screen

@@ -101,13 +101,12 @@ const Home = ({ navigation, route }) => {
 						ListHeaderComponent={
 							state?.home?.slides
 								? MainSlide(state?.home?.slides)
-								: SlideLoading()
+								: Loader({ title: "슬라이드 로딩중...", slideHeight: 500 })
 						}
 						data={state?.home?.cate ? state?.home?.cate : [1]}
 						renderItem={(item) =>
 							item.item === 1 ? (
-								// <ListLoading/>
-								<Loader text="로딩중.." color={"#000"} />
+								<Loader title="리스트 로딩중..." slideHeight={200} />
 							) : (
 								(item?.item?.listType === ListType.SYNOPSIS_DEFAULT && (
 									<SynopsisDefault
@@ -131,7 +130,7 @@ const Home = ({ navigation, route }) => {
 			)}
 		</SafeAreaView>
 	) : (
-		<Loading></Loading>
+		<Loader title="로딩중..." />
 	);
 };
 const SafeAreaView = styled.SafeAreaView`

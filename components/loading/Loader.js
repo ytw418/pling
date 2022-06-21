@@ -3,27 +3,28 @@ import PropTypes from "prop-types";
 import styled from "styled-components/native";
 import { WINDOW_HEIGHT } from "../../constants";
 
-const Loader = ({ text, color = "#fafafa" }) => {
-  return (
-    <View>
-      <Title color={color}>{text}</Title>
-    </View>
-  );
+const Loader = ({ title, slideHeight }) => {
+	return (
+		<View slideHeight={slideHeight}>
+			<Title>{title}</Title>
+		</View>
+	);
+
+	// Loader.propTypes = {
+	// 	title: PropTypes.string.isRequired,
+	// };
 };
 
 const View = styled.View`
-  background-color: #000;
-  justify-content: center;
-  align-items: center;
-  height: ${WINDOW_HEIGHT - 50}px;
+	background-color: #000;
+	justify-content: center;
+	align-items: center;
+	height: ${(props) =>
+		props.slideHeight ? props.slideHeight : WINDOW_HEIGHT - 50}px;
 `;
 const Title = styled.Text`
-  color: ${(props) => (props.color ? props.color : "#FFF")};
-  font-size: 18px;
+	color: #fff;
+	font-size: 18px;
 `;
-
-Loader.propTypes = {
-  text: PropTypes.string.isRequired,
-};
 
 export default Loader;
