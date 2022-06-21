@@ -19,4 +19,15 @@ const Image = styled.Image`
   height: 400px;
   border-radius: 15px;
 `;
+
+// story {
+//   subtitle
+//   synopsisId
+//   synopsis {
+//     id
+//     title
+//     ...synopsis
+//   }
+// }
+
 export default FullCard;

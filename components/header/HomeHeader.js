@@ -4,8 +4,11 @@ import { TouchableOpacity } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Entypo } from "@expo/vector-icons";
 import { Animated } from "react-native";
-const HomeHeader = ({ navigation, animatedValue }) => {
+import { useNavigation } from "@react-navigation/native";
+
+const HomeHeader = ({ animatedValue }) => {
   //console.log("contentOffset", contentOffset);
+  const navigation = useNavigation();
 
   const headerOpacity = animatedValue.interpolate({
     inputRange: [100, 200],

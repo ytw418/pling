@@ -13,6 +13,8 @@ import ListLoading from "../components/loading/ListLoading";
 import SlideLoading from "../components/loading/SlideLoading";
 import Loading from "../components/loading/Loading";
 import { Animated } from "react-native";
+import { ListType } from "../constants";
+import Loader from "../components/loading/Loader";
 
 const Home = ({ navigation, route }) => {
   const { APIURL, APIKEY } = getEnvVars();
@@ -97,8 +99,17 @@ const Home = ({ navigation, route }) => {
         scrollEventThrottle={16}
         onRefresh={getMainApi}
         refreshing={false}
+        // getItemLayout={(data, index) => ({
+        //   length: 300,
+        //   offset: 300 * index,
+        //   index,
+        // })}
         keyExtractor={(item, index) => item + index}
-        initialNumToRender={2}
+        // initialNumToRender={2} //초기 랜더링 아이탬 갯수
+        // maxToRenderPerBatch={1} // 스크롤시 최대 랜더링 될 아이탬 갯수
+        // removeClippedSubviews={false}
+        // windowSize={2}
+        onEndReached={() => console.log("offset", offset)}
         onScroll={Animated.event(
           [
             {
@@ -111,16 +122,16 @@ const Home = ({ navigation, route }) => {
           ],
           { useNativeDriver: false }
         )}
-        onEndReached={() => console.log("offset", offset)}
         ListHeaderComponent={
           state?.home?.slides ? MainSlide(state?.home?.slides) : SlideLoading()
         }
         data={state?.home?.cate ? state?.home?.cate : [1]}
         renderItem={(item) =>
           item.item === 1 ? (
-            <ListLoading></ListLoading>
+            // <ListLoading/>
+            <Loader text="로딩중.." color={"#000"} />
           ) : (
-            (item?.item?.listType === "SYNOPSIS_DEFAULT" && (
+            (item?.item?.listType === ListType.SYNOPSIS_DEFAULT && (
               <SynopsisDefault
                 navigation={navigation}
                 syDefault={item?.item}
@@ -138,7 +149,9 @@ const Home = ({ navigation, route }) => {
           )
         }
       />
-      <HomeHeader navigation={navigation} animatedValue={offset}></HomeHeader>
+      {typeof offset !== "number" && (
+        <HomeHeader navigation={navigation} animatedValue={offset}></HomeHeader>
+      )}
     </SafeAreaView>
   ) : (
     <Loading></Loading>

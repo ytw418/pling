@@ -4,7 +4,9 @@ import HomeHeader from "../components/header/HomeHeader";
 const Creator = () => {
   return (
     <>
-      <HomeHeader></HomeHeader>
+      {typeof offset !== "number" && (
+        <HomeHeader animatedValue={offset}></HomeHeader>
+      )}
       <Text>creator</Text>
     </>
   );
