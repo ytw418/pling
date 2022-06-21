@@ -3,7 +3,7 @@ import { Text, Dimensions, StyleSheet, View } from "react-native";
 import HomeHeader from "../components/header/HomeHeader";
 const Creator = () => {
 	return (
-		<HomeHeader animatedValue={offset}>
+		<HomeHeader>
 			<Text>creator</Text>
 		</HomeHeader>
 	);
