@@ -5,16 +5,17 @@ import styled, { ThemeProvider } from "styled-components";
 import theme from "./theme";
 import { Provider } from "./ContextAPI";
 import StackNavigator from "./navigation/StackNavigator";
+import MainBlock from "./navigation/MainBlock";
 
 export default function App() {
-  return (
-    <Provider>
-      <ThemeProvider theme={theme}>
-        <NavigationContainer>
-          <StatusBar style="light" translucent />
-          <StackNavigator></StackNavigator>
-        </NavigationContainer>
-      </ThemeProvider>
-    </Provider>
-  );
+	return (
+		<Provider>
+			<ThemeProvider theme={theme}>
+				<NavigationContainer>
+					<StatusBar style="light" translucent />
+					<StackNavigator />
+				</NavigationContainer>
+			</ThemeProvider>
+		</Provider>
+	);
 }
