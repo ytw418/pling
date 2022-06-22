@@ -24,8 +24,16 @@ function Reducer(state, action) {
 			return produce(state, (draft) => {
 				draft.home.cate.map((item) => {
 					const targetObj = item.list.find((obj) => obj.id === action.id);
-					console.log("draft.home.cate", targetObj);
+					//	console.log("draft.home.cate", targetObj);
 					if (targetObj) targetObj.active = !targetObj.active; // isLiked
+
+					if (!targetObj) {
+						const synopsisObj = item?.list?.find(
+							(obj) => obj?.synopsis?.id === action.id
+						);
+						console.log("item?.list?.synopsis", synopsisObj);
+						if (synopsisObj) synopsisObj.active = !synopsisObj.active; // isLiked
+					}
 				});
 			});
 
