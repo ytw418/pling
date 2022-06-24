@@ -4,33 +4,89 @@ import styled from "styled-components/native";
 import { WINDOW_HEIGHT } from "../constants";
 import { useApiState, useDispatch } from "../ContextAPI";
 import axios from "axios";
-import { isLoggedInVar } from "../Apollo";
+import { isLoggedInVar } from "../store/Login";
 // AsyncStorage
 
 import { useQuery, gql, useReactiveVar, useApolloClient } from "@apollo/client";
 import { AsyncStorage } from "react-native";
 
-const getShowSynopsisDetail = gql`
-	query showSynopsisDetail($id: ID!) {
-		showSynopsisDetail(id: $id) {
-			id
-			title
-			text
-			commentsCount
-			srcLikeCount
-			srcRating
-			stories {
+const fetchSlideItems = gql`
+	query fetchSlideItems($tabNo: Int!) {
+		fetchSlideItems(tabNo: $tabNo) {
+			__typename
+			... on Poll {
 				id
-				subtitle
-				audioUrl
-				rent
-				perm
-				displayGenre
+				title
+				titleUrl
 				description
-				synopsis {
+				text
+				poster
+				note
+				reward
+			}
+			... on Category {
+				id
+				title
+				titleUrl
+				description
+				text
+				poster
+				note
+			}
+			... on Synopsis {
+				id
+				title
+				titleUrl
+				description
+				text
+				poster
+				note
+				srcId
+				isOrigin
+				author {
 					id
-					title
+					name
+					thumbnail
 				}
+			}
+			... on Plinist {
+				id
+				title
+				titleUrl
+				description
+				text
+				poster
+				note
+				channelName
+				youtube
+				user {
+					id
+					name
+					thumbnail
+				}
+			}
+			... on Product {
+				id
+				title
+				titleUrl
+				description
+				text
+				poster
+				note
+			}
+			... on Event {
+				id
+				title
+				titleUrl
+				description
+				text
+				poster
+				note
+				url
+				promo
+				model
+				targetId
+				color
 			}
 		}
 	}
@@ -45,24 +101,25 @@ const Creator = () => {
 
 	console.log("isLoggedInVar", isLogin ? "참" : "거짓");
 
-	const { loading, error, data } = useQuery(getShowSynopsisDetail, {
+	const { loading, error, data } = useQuery(fetchSlideItems, {
 		variables: {
 			// id: +props.id
-			id: 435, // props.id
+			tabNo: 1, // props.id
 		},
-		onCompleted: (cache, data) => {
-			console.log(data);
-			// 좋아상태 !isLiked
-			cache.modify({
-				id: `Story:1236`, // Synopsis:435 cache key 메모리 주소
-				data: {
-					isLiked: (prev) => !prev,
-				},
-			});
+		// onCompleted: (cache, data) => {
+		// 	console.log(data);
+		// 	// 좋아상태 !isLiked
+		// 	cache.modify({
+		// 		id: `Story:1236`, // Synopsis:435 cache key 메모리 주소
+		// 		data: {
+		// 			isLiked: (prev) => !prev,
+		// 		},
+		// 	});
 
-			cache.clear();
-		},
+		// 	cache.clear();
+		// },
 	});
+	console.log("data", data);
 
 	return (
 		<HomeHeader headerTitle={"creator"}>
@@ -70,7 +127,7 @@ const Creator = () => {
 				<Title>creator</Title>
 				{(loading && <Title>로당중</Title>) ||
 					(error && <Title>에러</Title>) ||
-					(data && <Title>{data.showSynopsisDetail.id}</Title>)}
+					(data && <Title>{}</Title>)}
 			</View>
 		</HomeHeader>
 	);

@@ -47,16 +47,16 @@ const MainSlide = (slides, navigation) => {
 								onPress={() => {
 									navigation.navigate("Detail", {
 										poster: slides?.poster,
-										title: slides?.description,
-										text: slides?.text,
+										title: slides?.title,
+										genres: slides?.genres,
 										id: slides?.id,
 										active: slides?.active,
 									});
 								}}
 							>
 								<Image
-									style={styles.titleUrl}
-									source={{ uri: slides?.titleUrl }}
+									style={styles.titleImage}
+									source={{ uri: slides?.titleImage }}
 									accessibilityHint="이미지로딩실패"
 								></Image>
 							</TouchableHighlight>
@@ -68,10 +68,12 @@ const MainSlide = (slides, navigation) => {
 							></Image>
 						</LinearGradient>
 						<View style={[styles.child]}>
-							<Text style={styles.description}>
-								{slides?.description ?? "not found"}
+							<Text style={styles.summary}>
+								{slides?.summary ?? "not found"}
 							</Text>
-							<Text style={styles.text}>{slides?.text ?? "not found"}</Text>
+							<Text style={styles.genres}>
+								{slides?.genres?.join(" · ") ?? "not found"}
+							</Text>
 						</View>
 					</View>
 				))}
@@ -87,14 +89,14 @@ const styles = StyleSheet.create({
 	},
 	container: { flex: 1, backgroundColor: "#000", width: width },
 	child: { width },
-	description: {
+	summary: {
 		fontSize: 13,
 		textAlign: "left",
 		color: "#fff",
 		paddingLeft: 10,
 		paddingTop: 10,
 	},
-	text: {
+	genres: {
 		fontSize: 13,
 		textAlign: "left",
 		color: "rgb(46, 239, 170) ",
@@ -103,6 +105,6 @@ const styles = StyleSheet.create({
 		paddingBottom: 35,
 	},
 	posterImage: { width: width, height: 400, zIndex: -1 },
-	titleUrl: { width: width, height: 400, position: "absolute" },
+	titleImage: { width: width, height: 400, position: "absolute" },
 });
 export default MainSlide;

@@ -8,7 +8,7 @@ import {
 	concat,
 	HttpLink,
 } from "@apollo/client";
-import { getEnvVars } from "../environment";
+import { getEnvVars } from "./environment";
 
 const { APIURL, APIKEY } = getEnvVars();
 const AUTH_TOKEN = APIKEY;

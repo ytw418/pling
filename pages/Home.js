@@ -17,7 +17,8 @@ import Entypo from "@expo/vector-icons/Entypo";
 import * as SplashScreen from "expo-splash-screen";
 import * as Font from "expo-font";
 import { SectionList } from "react-native-web";
-
+import { fetchSlideItems } from "../store/Slide";
+import { useQuery, gql, useReactiveVar, useApolloClient } from "@apollo/client";
 const Home = ({ route }) => {
 	const [appIsReady, setAppIsReady] = useState(false);
 	const dispatch = useDispatch();
@@ -63,6 +64,13 @@ const Home = ({ route }) => {
 		console.log("api호출");
 	};
 
+	const { loading, error, data } = useQuery(fetchSlideItems, {
+		variables: {
+			// id: +props.id
+			tabNo: 1, // props.id
+		},
+	});
+
 	// 로그인 API 성공콜백에서 상태 변경 시
 	// fn(() => {
 	// 	setAppIsReady(!appIsReady);
@@ -73,46 +81,48 @@ const Home = ({ route }) => {
 	// const { data, error } = useQuery(GQL_API, {
 	//   ...params,
 	// });
-	const onLayoutRootView = useCallback(async () => {
-		if (appIsReady) {
-			// This tells the splash screen to hide immediately! If we call this after
-			// `setAppIsReady`, then we may see a blank screen while the app is
-			// loading its initial state and rendering its first pixels. So instead,
-			// we hide the splash screen once we know the root view has already
-			// performed layout.
-			await SplashScreen.hideAsync();
-		}
-	}, [appIsReady]);
+	// const onLayoutRootView = useCallback(async () => {
+	// 	if (appIsReady) {
+	// 		// This tells the splash screen to hide immediately! If we call this after
+	// 		// `setAppIsReady`, then we may see a blank screen while the app is
+	// 		// loading its initial state and rendering its first pixels. So instead,
+	// 		// we hide the splash screen once we know the root view has already
+	// 		// performed layout.
+	// 		await SplashScreen.hideAsync();
+	// 	}
+	// }, [appIsReady]);
 
-	useEffect(() => {
-		const prepare = async () => {
-			try {
-				// Keep the splash screen visible while we fetch resources
-				await SplashScreen.preventAutoHideAsync();
-				// Pre-load fonts, make any API calls you need to do here
-				//		await Font.loadAsync(Entypo.font);
-				await getMainApi();
-				// Artificially delay for two seconds to simulate a slow loading
-				// experience. Please remove this if you copy and paste the code!
-				//	await new Promise((resolve) => setTimeout(resolve, 2000));
-			} catch (e) {
-				console.warn(e);
-			} finally {
-				// Tell the application to render
-				setAppIsReady(true);
-				//	SplashScreen.hideAsync();
-			}
-		};
+	// useEffect(() => {
+	// 	const prepare = async () => {
+	// 		try {
+	// 			// Keep the splash screen visible while we fetch resources
+	// 			await SplashScreen.preventAutoHideAsync();
+	// 			// Pre-load fonts, make any API calls you need to do here
+	// 			//		await Font.loadAsync(Entypo.font);
+	// 			//await getMainApi();
+	// 			// Artificially delay for two seconds to simulate a slow loading
+	// 			// experience. Please remove this if you copy and paste the code!
+	// 			//	await new Promise((resolve) => setTimeout(resolve, 2000));
+	// 		} catch (e) {
+	// 			console.warn(e);
+	// 		} finally {
+	// 			// Tell the application to render
+	// 			setAppIsReady(true);
+	// 			//	SplashScreen.hideAsync();
+	// 		}
+	// 	};
 
-		prepare();
-	}, []);
+	// 	prepare();
+	// }, []);
 
-	if (!appIsReady) {
-		return null;
-	}
+	// if (!appIsReady) {
+	// 	return null;
+	// }
+
+	//	onLayout={onLayoutRootView}
 
 	return (
-		<SafeAreaView onLayout={onLayoutRootView}>
+		<SafeAreaView>
 			{typeof offset !== "number" && (
 				<HomeHeader animatedValue={offset}>
 					<FlatListContainer
@@ -144,8 +154,8 @@ const Home = ({ route }) => {
 							{ useNativeDriver: false }
 						)}
 						ListHeaderComponent={
-							state?.home?.slides
-								? MainSlide(state?.home?.slides, navigation)
+							data
+								? MainSlide(data?.fetchSlideItems, navigation)
 								: Loader({ title: "슬라이드 로딩중...", slideHeight: 500 })
 						}
 						data={state?.home?.cate ? state?.home?.cate : [1]}
