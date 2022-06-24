@@ -14,8 +14,14 @@ import { LinearGradient } from "expo-linear-gradient";
 import { useNavigation } from "@react-navigation/native";
 
 const img404 = require("../images/404img.png");
-const MainSlide = (slides) => {
-	const navigation = useNavigation();
+const MainSlide = (slides, navigation) => {
+	//	const navigation = useNavigation();
+
+
+	// if(true) {
+	// 	///
+	// }
+
 	return (
 		<View style={styles.container}>
 			<SwiperFlatList

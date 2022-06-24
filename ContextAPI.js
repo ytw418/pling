@@ -2,10 +2,12 @@ import React, { useState, useReducer, createContext, useContext } from "react";
 import produce from "immer";
 
 const initials = {
-	// home: {
-	//   slides: false,
-	//   cate: false,
-	// },
+	home: {
+		slide: false,
+		slides: false,
+
+		cate: false,
+	},
 };
 
 function Reducer(state, action) {
@@ -20,6 +22,7 @@ function Reducer(state, action) {
 				...state,
 				home: { ...state.home, cate: action.cate },
 			};
+
 		case "CARD_LIKE":
 			return produce(state, (draft) => {
 				draft.home.cate.map((item) => {

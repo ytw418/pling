@@ -17,6 +17,8 @@ const HomeHeader = ({ children, animatedValue, headerTitle = "Pling" }) => {
 	});
 	//style={{ opacity: headerOpacity }}
 
+	// console.log("animatedValue", animatedValue);
+
 	return (
 		<Container>
 			{children}

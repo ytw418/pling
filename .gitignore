@@ -12,3 +12,5 @@ web-build/
 environment.js
 # macOS
 .DS_Store
+.vscode
+pages/api.json
