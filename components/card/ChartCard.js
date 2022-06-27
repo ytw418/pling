@@ -8,17 +8,17 @@ import { useNavigation } from "@react-navigation/native";
 const ChartCard = ({
 	poster,
 	title,
-	genres,
+	text,
 	ListNumber,
 	updatedAt,
 	id,
-	active,
+	isLiked,
 }) => {
 	//console.log("Date.now() - updatedAt =", (Date.now() - updatedAt) / 1000);
 	const [modalVisible, setModalVisible] = useState(false);
 	const navigation = useNavigation();
 	// console.log("id", id);
-	// console.log("active", active);
+	// console.log("isLiked", isLiked);
 
 	return (
 		<Card>
@@ -27,9 +27,9 @@ const ChartCard = ({
 					navigation.navigate("Detail", {
 						poster: poster,
 						title: title,
-						genres: genres,
+						text: text,
 						id: id,
-						active: active,
+						isLiked: isLiked,
 					});
 				}}
 			>
@@ -39,7 +39,7 @@ const ChartCard = ({
 						setModalVisible={setModalVisible}
 						poster={poster}
 						title={title}
-						genres={genres}
+						text={text}
 					></BottomModal>
 					<Image source={{ uri: poster }}></Image>
 					<ListNumberBlock>
@@ -49,8 +49,8 @@ const ChartCard = ({
 						)}
 					</ListNumberBlock>
 					<CardInner>
-						<CardTitle active={active}>{title}</CardTitle>
-						<CardContent>{genres.join(" · ")}</CardContent>
+						<CardTitle isLiked={isLiked}>{title}</CardTitle>
+						<CardContent>{text}</CardContent>
 					</CardInner>
 				</Inner>
 			</TouchableHighlight>
@@ -91,7 +91,7 @@ const CardInner = styled.View`
 
 const CardTitle = styled.Text`
 	font-size: 14px;
-	color: ${(props) => (props.active ? "red" : "#fff")};
+	color: ${(props) => (props.isLiked ? "red" : "#fff")};
 `;
 const CardContent = styled.Text`
 	font-size: 13px;

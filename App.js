@@ -6,7 +6,8 @@ import theme from "./theme";
 import { Provider } from "./ContextAPI";
 import StackNavigator from "./navigation/StackNavigator";
 import MainBlock from "./navigation/MainBlock";
-import { client } from "./environment";
+import { client } from "./Apollo";
+
 import { ApolloProvider } from "@apollo/client";
 
 export default function App() {

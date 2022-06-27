@@ -1,4 +1,4 @@
-import { useQuery, gql, useReactiveVar, useApolloClient } from "@apollo/client";
+import { gql } from "@apollo/client";
 
 export const fetchSlideItems = gql`
 	query fetchSlideItems($tabNo: Int!) {

@@ -18,6 +18,8 @@ import * as SplashScreen from "expo-splash-screen";
 import * as Font from "expo-font";
 import { SectionList } from "react-native-web";
 import { fetchSlideItems } from "../store/Slide";
+import { showTabV2 } from "../store/Cate";
+
 import { useQuery, gql, useReactiveVar, useApolloClient } from "@apollo/client";
 const Home = ({ route }) => {
 	const [appIsReady, setAppIsReady] = useState(false);
@@ -64,12 +66,31 @@ const Home = ({ route }) => {
 		console.log("api호출");
 	};
 
-	const { loading, error, data } = useQuery(fetchSlideItems, {
+	const {
+		loading: sLoading,
+		error: sError,
+		data: sData,
+		refetch: sRefetch,
+	} = useQuery(fetchSlideItems, {
 		variables: {
 			// id: +props.id
 			tabNo: 1, // props.id
 		},
 	});
+
+	const {
+		loading: cLoading,
+		error: cError,
+		data: cData,
+		refetch: cRefetch,
+	} = useQuery(showTabV2, {
+		variables: {
+			tabNo: 1,
+			page: 0,
+		},
+	});
+
+	//console.log("cData?.showTabV2?.unionList", cData?.showTabV2);
 
 	// 로그인 API 성공콜백에서 상태 변경 시
 	// fn(() => {
@@ -127,7 +148,9 @@ const Home = ({ route }) => {
 				<HomeHeader animatedValue={offset}>
 					<FlatListContainer
 						scrollEventThrottle={16}
-						onRefresh={getMainApi}
+						onRefresh={() => {
+							sRefetch(), cRefetch();
+						}}
 						refreshing={false}
 						// getItemLayout={(data, index) => ({
 						//   length: 300,
@@ -154,35 +177,37 @@ const Home = ({ route }) => {
 							{ useNativeDriver: false }
 						)}
 						ListHeaderComponent={
-							data
-								? MainSlide(data?.fetchSlideItems, navigation)
+							sData?.fetchSlideItems
+								? MainSlide(sData?.fetchSlideItems, navigation)
 								: Loader({ title: "슬라이드 로딩중...", slideHeight: 500 })
 						}
-						data={state?.home?.cate ? state?.home?.cate : [1]}
+						data={cData?.showTabV2 ? cData?.showTabV2 : [1]}
 						renderItem={(item) =>
 							item.item === 1 ? (
 								<Loader title="리스트 로딩중..." slideHeight={200} />
 							) : (
+								(console.log("item?.item?.listType", item?.item?.typename),
 								(item.item &&
-									item?.item?.listType === ListType.SYNOPSIS_DEFAULT && (
+									item?.item?.typename === ListType.SYNOPSIS_DEFAULT && (
 										<SynopsisDefault
-											syDefault={{
-												...item?.item,
+											syDefault={
+												item?.item
+												//...item?.item,
 												// ...(item.item.titleUrl && {
 												// 	titleImage: item.item.titleUrl,
 												// }),
-											}}
+											}
 										></SynopsisDefault>
 									)) ||
-								(item?.item?.listType === "STORY_CHART" && (
-									<StoryChart stChart={item?.item}></StoryChart>
-								)) ||
-								(item?.item?.listType === "SYNOPSIS_GRID" && (
-									<SyGrid syGrid={item?.item}></SyGrid>
-								)) ||
-								(item?.item?.listType === "SYNOPSIS_FULL" && (
-									<SyFull syFull={item?.item}></SyFull>
-								))
+									(item?.item?.typename === "Story_chart" &&
+										(console.log("stChartddd@@@@@@@@@@@@@@@@@@@@@@@@@@"),
+										(<StoryChart stChart={item?.item}></StoryChart>))) ||
+									(item?.item?.typename === ListType.SYNOPSIS_GRID && (
+										<SyGrid syGrid={item?.item}></SyGrid>
+									)) ||
+									(item?.item?.typename === ListType.SYNOPSIS_FULL && (
+										<SyFull syFull={item?.item}></SyFull>
+									)))
 							)
 						}
 					/>
@@ -191,6 +216,7 @@ const Home = ({ route }) => {
 		</SafeAreaView>
 	);
 };
+
 const SafeAreaView = styled.SafeAreaView`
 	background-color: #000;
 	color: red;

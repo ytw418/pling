@@ -1,24 +1,25 @@
 import React from "react";
 import styled, { css } from "styled-components/native";
 import DefaultCard from "./card/DefaultCard";
-import { useNavigation } from "@react-navigation/native";
 
 const SynopsisDefault = ({ syDefault }) => {
-	const navigation = useNavigation();
+	//console.log("SynopsisDefault 랜더링", syDefault);
+
 	return (
 		<Container>
 			<HeaderTitle>{syDefault?.title ?? " "}</HeaderTitle>
 			{syDefault && (
 				<SynopsisSlide
 					horizontal
-					data={syDefault?.list}
-					renderItem={({ item }) => (
+					data={syDefault?.unionList}
+					keyExtractor={(item, index) => item + index}
+					renderItem={({ item, key }) => (
 						<CardMargin>
 							<DefaultCard
 								id={item?.id}
 								poster={item?.poster}
 								title={item?.title}
-								genres={item?.genres}
+								text={item?.text}
 								active={item?.active ?? false}
 								updatedAt={item?.updatedAt}
 							/>

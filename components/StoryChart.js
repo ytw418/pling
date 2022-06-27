@@ -12,8 +12,9 @@ const StoryChart = ({ stChart }) => {
 	//       list: arr.slice(i, i + PAGE_SIZE),
 	//     }
 	// );
+	console.log("stChartddd@@@@@@@@@@@@@@@@@@@@@@@@@@");
 
-	const arr = stChart?.list;
+	const arr = stChart?.unionList;
 	const list = arr
 		.map(
 			(_, i, origin) => i % PAGE_SIZE === 0 && origin.slice(i, i + PAGE_SIZE)
@@ -28,17 +29,18 @@ const StoryChart = ({ stChart }) => {
 					{list.map((data, i) => (
 						<StChartSlide
 							key={i}
+							keyExtractor={(item, index) => item + index}
 							// horizontal
 							data={data}
 							renderItem={({ item, index }) => (
 								<ChartCard
-									ListNumber={(index + 1) * (i + 1)}
+									ListNumber={index + 1 + i * 5}
 									poster={item?.poster}
 									title={item?.synopsis?.title}
-									genres={item?.synopsis?.genres}
+									text={item?.synopsis?.text}
 									updatedAt={item?.updatedAt}
-									id={item?.synopsis?.id ? item?.synopsis?.id : item?.id}
-									active={item?.active ?? false}
+									id={item?.id}
+									isLiked={item?.isLiked}
 								/>
 							)}
 						></StChartSlide>

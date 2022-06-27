@@ -3,7 +3,7 @@ import styled, { css } from "styled-components/native";
 import { DEFAULT_CARD_WIDTH } from "../../constants";
 import { TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-const DefaultCard = ({ poster, title, genres, id, active, updatedAt }) => {
+const DefaultCard = ({ poster, title, text, id, active, updatedAt }) => {
 	const navigation = useNavigation();
 	return (
 		<TouchableOpacity
@@ -11,7 +11,7 @@ const DefaultCard = ({ poster, title, genres, id, active, updatedAt }) => {
 				navigation.navigate("Detail", {
 					poster: poster,
 					title: title,
-					genres: genres,
+					text: text,
 					id: id,
 					active: active,
 				});
@@ -26,7 +26,7 @@ const DefaultCard = ({ poster, title, genres, id, active, updatedAt }) => {
 					)}
 				</TitleBlock>
 
-				<CardContent>{genres.join(" · ")}</CardContent>
+				<CardContent>{text}</CardContent>
 			</Card>
 		</TouchableOpacity>
 	);

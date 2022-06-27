@@ -1,12 +1,18 @@
 import React from "react";
 import styled, { css } from "styled-components/native";
 import { useApiState, useDispatch } from "../ContextAPI";
-
+import { useMutation, gql } from "@apollo/client";
 const Detail = ({ navigation, route }) => {
-	const { poster, title, genres, id, active } = route.params;
-	const dispatch = useDispatch();
-	const state = useApiState();
+	const { poster, title, genres, id, isLiked } = route.params;
+
 	console.log("id", id);
+	const CREATE_LIKE_MUTATION = gql`
+		mutation toggleLikeStory {
+			toggleLikeStory(storyId: 2151)
+		}
+	`;
+
+	const [isLike] = useMutation(CREATE_LIKE_MUTATION);
 
 	//console.log("state", state.home.cate);
 	return (
@@ -17,16 +23,11 @@ const Detail = ({ navigation, route }) => {
 				<Text>title: {genres}</Text>
 				<Text>id: {id}</Text>
 				<Button
-					title={active ? "취소" : "좋아요"}
-					active={active}
-					color={active ? "red" : "gray"}
-					onPress={async () => {
-						await dispatch({
-							type: "CARD_LIKE",
-							id: id,
-						});
-
-						navigation.navigate("Home");
+					title={isLiked ? "취소" : "좋아요"}
+					isLiked={isLiked}
+					color={isLiked ? "red" : "gray"}
+					onPress={() => {
+						isLike();
 					}}
 				></Button>
 			</ScrollView>

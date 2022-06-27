@@ -104,6 +104,7 @@ const Creator = () => {
 	const { loading, error, data } = useQuery(fetchSlideItems, {
 		variables: {
 			// id: +props.id
+
 			tabNo: 1, // props.id
 		},
 		// onCompleted: (cache, data) => {
