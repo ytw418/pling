@@ -46,11 +46,7 @@ const MainSlide = (slides, navigation) => {
 							<TouchableHighlight
 								onPress={() => {
 									navigation.navigate("Detail", {
-										poster: slides?.poster,
-										title: slides?.description,
-										text: slides?.text,
 										id: slides?.id,
-										active: slides?.active,
 									});
 								}}
 							>
@@ -69,7 +65,7 @@ const MainSlide = (slides, navigation) => {
 						</LinearGradient>
 						<View style={[styles.child]}>
 							<Text style={styles.description}>
-								{slides?.description ?? "not found"}
+								{slides?.title ?? "not found"}
 							</Text>
 							<Text style={styles.text}>{slides?.text ?? "not found"}</Text>
 						</View>

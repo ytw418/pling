@@ -3,7 +3,7 @@ import styled, { css } from "styled-components/native";
 import FullCard from "./card/FullCard";
 
 const SyFull = (syFull) => {
-	console.log("s그리드드드드드드드드드ㅡㅡ드드", syFull.syFull.unionList);
+	//	console.log("s그리드드드드드드드드드ㅡㅡ드드", syFull.syFull.unionList);
 	return (
 		<Container>
 			<HeaderTitle>{syFull.syFull.title}</HeaderTitle>

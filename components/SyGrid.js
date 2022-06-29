@@ -3,7 +3,7 @@ import styled, { css } from "styled-components/native";
 import DefaultCard from "./card/DefaultCard";
 
 const SyGrid = (syGrid) => {
-	console.log("s그리드드드드드드드드드ㅡㅡ드드", syGrid.syGrid.title);
+	//	console.log("s그리드드드드드드드드드ㅡㅡ드드", syGrid.syGrid.title);
 	return (
 		<Container>
 			<HeaderTitle>{syGrid.syGrid.title}</HeaderTitle>

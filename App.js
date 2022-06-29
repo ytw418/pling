@@ -7,7 +7,7 @@ import { Provider } from "./ContextAPI";
 import StackNavigator from "./navigation/StackNavigator";
 import MainBlock from "./navigation/MainBlock";
 import { client } from "./Apollo";
-
+import React, { useContext } from "react";
 import { ApolloProvider } from "@apollo/client";
 
 export default function App() {

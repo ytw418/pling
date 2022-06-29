@@ -17,6 +17,8 @@ const SynopsisDefault = ({ syDefault }) => {
 						<CardMargin>
 							<DefaultCard
 								id={item?.id}
+								srcId={item?.srcId}
+								isLiked={item?.srcIsLiked}
 								poster={item?.poster}
 								title={item?.title}
 								text={item?.text}

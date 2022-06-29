@@ -3,24 +3,34 @@ import styled, { css } from "styled-components/native";
 import { DEFAULT_CARD_WIDTH } from "../../constants";
 import { TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-const DefaultCard = ({ poster, title, text, id, active, updatedAt }) => {
+const DefaultCard = ({
+	poster,
+	title,
+	text,
+	id,
+	srcId,
+	active,
+	updatedAt,
+	isLiked,
+}) => {
 	const navigation = useNavigation();
 	return (
 		<TouchableOpacity
-			onPress={() => {
+			onPress={() =>
 				navigation.navigate("Detail", {
-					poster: poster,
-					title: title,
-					text: text,
-					id: id,
-					active: active,
-				});
-			}}
+					poster,
+					title,
+					text,
+					id,
+					srcId,
+					active,
+				})
+			}
 		>
 			<Card>
 				<Image source={{ uri: poster }}></Image>
 				<TitleBlock>
-					<CardTitle active={active}>{title}</CardTitle>
+					<CardTitle isLiked={isLiked}>{title}</CardTitle>
 					{(Date.now() - updatedAt) / 1000 < 86400 * 30 && (
 						<NewText>New</NewText>
 					)}
@@ -42,7 +52,7 @@ const TitleBlock = styled.View`
 const CardTitle = styled.Text`
 	font-size: 14px;
 	padding-right: 5px;
-	color: ${(props) => (props.active ? "red" : "#fff")};
+	color: ${(props) => (props.isLiked ? "red" : "#fff")};
 `;
 const CardContent = styled.Text`
 	font-size: 13px;

@@ -17,26 +17,22 @@ export const showTabV2 = gql`
 					title
 					titleUrl
 					description
-					isAdult
-					isOrigin
 					text
-					plinistId
-					author {
-						id
-						name
-						thumbnail
-					}
 					updatedAt
+					srcId
+					srcIsLiked
 				}
 				... on Story {
 					id
-					isLiked
 					synopsisId
+					# __ref:Synopsis:몇번 (아이디가 있는 경우)
 					synopsis {
+						id
 						title
 						isOrigin
 						text
-						plinistId
+						srcId
+						srcIsLiked
 					}
 					poster
 					subtitle

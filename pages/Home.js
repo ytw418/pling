@@ -186,7 +186,6 @@ const Home = ({ route }) => {
 							item.item === 1 ? (
 								<Loader title="리스트 로딩중..." slideHeight={200} />
 							) : (
-								(console.log("item?.item?.listType", item?.item?.typename),
 								(item.item &&
 									item?.item?.typename === ListType.SYNOPSIS_DEFAULT && (
 										<SynopsisDefault
@@ -199,15 +198,15 @@ const Home = ({ route }) => {
 											}
 										></SynopsisDefault>
 									)) ||
-									(item?.item?.typename === "Story_chart" &&
-										(console.log("stChartddd@@@@@@@@@@@@@@@@@@@@@@@@@@"),
-										(<StoryChart stChart={item?.item}></StoryChart>))) ||
-									(item?.item?.typename === ListType.SYNOPSIS_GRID && (
-										<SyGrid syGrid={item?.item}></SyGrid>
-									)) ||
-									(item?.item?.typename === ListType.SYNOPSIS_FULL && (
-										<SyFull syFull={item?.item}></SyFull>
-									)))
+								(item?.item?.typename === "Story_chart" && (
+									<StoryChart stChart={item?.item}></StoryChart>
+								)) ||
+								(item?.item?.typename === ListType.SYNOPSIS_GRID && (
+									<SyGrid syGrid={item?.item}></SyGrid>
+								)) ||
+								(item?.item?.typename === ListType.SYNOPSIS_FULL && (
+									<SyFull syFull={item?.item}></SyFull>
+								))
 							)
 						}
 					/>

@@ -12,7 +12,7 @@ const StoryChart = ({ stChart }) => {
 	//       list: arr.slice(i, i + PAGE_SIZE),
 	//     }
 	// );
-	console.log("stChartddd@@@@@@@@@@@@@@@@@@@@@@@@@@");
+	console.log("stChart랜더링");
 
 	const arr = stChart?.unionList;
 	const list = arr
@@ -39,8 +39,9 @@ const StoryChart = ({ stChart }) => {
 									title={item?.synopsis?.title}
 									text={item?.synopsis?.text}
 									updatedAt={item?.updatedAt}
-									id={item?.id}
-									isLiked={item?.isLiked}
+									srcId={item?.synopsis?.srcId}
+									id={item?.synopsisId}
+									isLiked={item?.synopsis?.srcIsLiked}
 								/>
 							)}
 						></StChartSlide>

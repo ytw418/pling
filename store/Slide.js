@@ -32,6 +32,7 @@ export const fetchSlideItems = gql`
 				poster
 				note
 				srcId
+				srcIsLiked
 				isOrigin
 				author {
 					id
