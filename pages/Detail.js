@@ -8,6 +8,10 @@ import { showSynopsisDetail } from "../store/SynopsisDetail";
 import HomeHeader from "../components/header/HomeHeader";
 import { Animated } from "react-native";
 import ListHeader from "../components/detailPage/ListHeader";
+import { fetchStories } from "../store/fetchStories";
+import Loading from "../components/loading/Loading";
+import StoriesCard from "../components/card/StoriesCard";
+
 const offset = new Animated.Value(0);
 
 const Detail = ({ navigation, route }) => {
@@ -18,7 +22,17 @@ const Detail = ({ navigation, route }) => {
 			toggleLikeStory(storyId:${srcId})
 		}
 	`;
-	console.log("id", id);
+
+	const {
+		loading: fsLoading,
+		error: fsError,
+		data: fsData,
+		refetch: fsRefetch,
+	} = useQuery(fetchStories, {
+		variables: {
+			synopsisId: Number(id),
+		},
+	});
 
 	const {
 		loading: sdLoading,
@@ -27,12 +41,16 @@ const Detail = ({ navigation, route }) => {
 		refetch: sdRefetch,
 	} = useQuery(showSynopsisDetail, {
 		variables: {
-			id: id, // props.id
+			id: id,
 		},
 	});
 
-	console.log("sdData", sdData);
-	console.log("sdError", sdError);
+	if (fsLoading === false) {
+		console.log("fsData", fsData.poster);
+		console.log("fsLoading", fsLoading);
+		console.log("sdError", sdError);
+		console.log("fsError", fsError);
+	}
 
 	return (
 		<SafeAreaView>
@@ -62,8 +80,22 @@ const Detail = ({ navigation, route }) => {
 							sdData?.showSynopsisDetail,
 							navigation
 						)}
-						data={[0]}
-						renderItem={(item) => <Text>aa</Text>}
+						data={fsLoading === false && fsData?.fetchStories}
+						renderItem={(item, index) =>
+							fsLoading === false &&
+							(console.log("first", item),
+							(
+								<StoriesCard
+									poster={item?.item?.poster}
+									text={item?.item?.displayGenre}
+									description={item?.item?.description}
+									audio={item?.item?.audio?.unit}
+									synopsisId={item?.item?.synopsisId}
+									id={item?.item?.id}
+									subtitle={item?.item?.subtitle}
+								/>
+							))
+						}
 					/>
 				</HomeHeader>
 			)}
@@ -80,6 +112,7 @@ const FlatListContainer = styled.FlatList``;
 const Container = styled.View`
 	background: #000;
 	padding: 30px;
+	height: 300px;
 `;
 
 const Button = styled.Button`
@@ -94,6 +127,12 @@ const Text = styled.Text`
 	color: #fff;
 	font-size: 16px;
 `;
+
+const Ex = styled.Text`
+	color: #fff;
+	font-size: 16px;
+`;
+
 const Image = styled.Image`
 	height: 300px;
 	width: 300px;

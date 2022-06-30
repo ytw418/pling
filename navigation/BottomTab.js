@@ -2,7 +2,7 @@ import React from "react";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import Home from "../pages/Home";
 import Creator from "../pages/Creator";
-import FlingBox from "../pages/FlingBox";
+import PlingBox from "../pages/PlingBox";
 import MyDrawer from "../pages/MyDrawer";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
@@ -46,10 +46,10 @@ function BottomTab() {
 				}}
 			/>
 			<Tab.Screen
-				name="FlingBox"
-				component={FlingBox}
+				name="PlingBox"
+				component={PlingBox}
 				options={{
-					tabBarLabel: "FlingBox",
+					tabBarLabel: "PlingBox",
 					tabBarLabelStyle: { fontSize: 12 },
 					tabBarIcon: ({ color }) => (
 						<MaterialCommunityIcons

@@ -20,7 +20,7 @@ const ChartCard = ({
 	const navigation = useNavigation();
 	// console.log("id", id);
 	// console.log("isLiked", isLiked);
-	console.log("인기순위 랜더링 시작 isLiked", isLiked);
+	//console.log("인기순위 랜더링 시작 isLiked", isLiked);
 
 	return (
 		<Card>

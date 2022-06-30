@@ -127,6 +127,8 @@ const RowBlock = styled.View`
 	display: flex;
 	justify-content: space-between;
 	flex: 1;
+	padding-top: 10px;
+	padding-bottom: 10px;
 `;
 
 const RowBlockSub = styled.View`
@@ -184,6 +186,7 @@ const SubPlayer = styled.Text`
 	font-size: 15px;
 `;
 const WhiteText = styled.Text`
+	padding-top: 30px;
 	color: #fff;
 	font-size: 19px;
 `;

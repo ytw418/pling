@@ -10,8 +10,8 @@ import {
 } from "@apollo/client";
 import { getEnvVars } from "./environment";
 import { createContext, useContext } from "react";
-const { APIURL, APIKEY } = getEnvVars();
-const AUTH_TOKEN = APIKEY;
+import { userData } from "./store/Login";
+const { APIURL } = getEnvVars();
 
 const httpLink = new HttpLink({
 	uri: APIURL,
@@ -19,14 +19,15 @@ const httpLink = new HttpLink({
 
 const authMiddleware = new ApolloLink((operation, forward) => {
 	// add the authorization to the headers
-
+	const AUTH_TOKEN = userData().token;
 	operation.setContext({
 		headers: {
-			authorization: `Bearer ${AUTH_TOKEN}`,
+			...(AUTH_TOKEN && { authorization: `Bearer ${AUTH_TOKEN}` }),
 		},
 	});
 	return forward(operation);
 });
+
 export const client = new ApolloClient({
 	link: concat(authMiddleware, httpLink),
 	connectToDevTools: true,

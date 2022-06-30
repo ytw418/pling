@@ -19,14 +19,15 @@ import * as Font from "expo-font";
 import { SectionList } from "react-native-web";
 import { fetchSlideItems } from "../store/Slide";
 import { showTabV2 } from "../store/Cate";
+import { userData } from "../store/Login";
 
 import { useQuery, gql, useReactiveVar, useApolloClient } from "@apollo/client";
 const Home = ({ route }) => {
 	const [appIsReady, setAppIsReady] = useState(false);
 	const dispatch = useDispatch();
 	const state = useApiState();
-	const { APIURL, APIKEY } = getEnvVars();
-	const AUTH_TOKEN = APIKEY;
+	const { APIURL } = getEnvVars();
+	const AUTH_TOKEN = userData().token;
 	const offset = new Animated.Value(0);
 	const navigation = useNavigation();
 
@@ -40,13 +41,7 @@ const Home = ({ route }) => {
 				axios.get("test-slides"),
 				axios.get("test-categories"),
 			]);
-			// if (cateResult) {
-			// 	console.log("slidesResult.status", cateResult.status);
-			// 	await dispatch({
-			// 		type: "HOME_LODGING_CAT",
-			// 		slides: slidesResult?.data?.data,
-			// 	});
-			// }
+
 			if (cateResult) {
 				console.log("cateResult.status", cateResult.status);
 				dispatch({
@@ -65,6 +60,7 @@ const Home = ({ route }) => {
 		}
 		console.log("api호출");
 	};
+	console.log("AUTH_TOKEN", AUTH_TOKEN);
 
 	const {
 		loading: sLoading,
@@ -73,8 +69,7 @@ const Home = ({ route }) => {
 		refetch: sRefetch,
 	} = useQuery(fetchSlideItems, {
 		variables: {
-			// id: +props.id
-			tabNo: 1, // props.id
+			tabNo: 1,
 		},
 	});
 
@@ -89,58 +84,6 @@ const Home = ({ route }) => {
 			page: 0,
 		},
 	});
-
-	//console.log("cData?.showTabV2?.unionList", cData?.showTabV2);
-
-	// 로그인 API 성공콜백에서 상태 변경 시
-	// fn(() => {
-	// 	setAppIsReady(!appIsReady);
-	// 	setAppIsReady((prev) => !prev);
-	// SectionList((prev) => (prev ? [...prev, newObj] : {}));
-	// });
-
-	// const { data, error } = useQuery(GQL_API, {
-	//   ...params,
-	// });
-	// const onLayoutRootView = useCallback(async () => {
-	// 	if (appIsReady) {
-	// 		// This tells the splash screen to hide immediately! If we call this after
-	// 		// `setAppIsReady`, then we may see a blank screen while the app is
-	// 		// loading its initial state and rendering its first pixels. So instead,
-	// 		// we hide the splash screen once we know the root view has already
-	// 		// performed layout.
-	// 		await SplashScreen.hideAsync();
-	// 	}
-	// }, [appIsReady]);
-
-	// useEffect(() => {
-	// 	const prepare = async () => {
-	// 		try {
-	// 			// Keep the splash screen visible while we fetch resources
-	// 			await SplashScreen.preventAutoHideAsync();
-	// 			// Pre-load fonts, make any API calls you need to do here
-	// 			//		await Font.loadAsync(Entypo.font);
-	// 			//await getMainApi();
-	// 			// Artificially delay for two seconds to simulate a slow loading
-	// 			// experience. Please remove this if you copy and paste the code!
-	// 			//	await new Promise((resolve) => setTimeout(resolve, 2000));
-	// 		} catch (e) {
-	// 			console.warn(e);
-	// 		} finally {
-	// 			// Tell the application to render
-	// 			setAppIsReady(true);
-	// 			//	SplashScreen.hideAsync();
-	// 		}
-	// 	};
-
-	// 	prepare();
-	// }, []);
-
-	// if (!appIsReady) {
-	// 	return null;
-	// }
-
-	//	onLayout={onLayoutRootView}
 
 	return (
 		<SafeAreaView>

@@ -2,11 +2,11 @@ import React from "react";
 import styled from "styled-components/native";
 import HomeHeader from "../components/header/HomeHeader";
 import { WINDOW_HEIGHT } from "../constants";
-const FlingBox = () => {
+const PlingBox = () => {
 	return (
-		<HomeHeader headerTitle={"FlingBox"}>
+		<HomeHeader headerTitle={"PlingBox"}>
 			<View>
-				<Title>FlingBox</Title>
+				<Title>PlingBox</Title>
 			</View>
 		</HomeHeader>
 	);
@@ -22,4 +22,4 @@ const Title = styled.Text`
 	color: #fff;
 	font-size: 18px;
 `;
-export default FlingBox;
+export default PlingBox;
