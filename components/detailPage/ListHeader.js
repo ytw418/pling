@@ -42,9 +42,7 @@ const ListHeader = ({ sdData }) => {
 		__typename,
 		SynopsisComment,
 	} = sdData;
-	console.log("srcId", srcId);
-	console.log("srcIsLiked", srcIsLiked);
-	console.log("srcLikeCount", srcLikeCount);
+	
 	console.log("SynopsisComment", SynopsisComment);
 
 	const handleLine = () => {
@@ -71,7 +69,6 @@ const ListHeader = ({ sdData }) => {
 		CREATE_LIKE_MUTATION,
 		{
 			update: (cache, data) => {
-				console.log(data?.data?.toggleLikeStory);
 				if (data?.data?.toggleLikeStory) {
 					console.log("캐쉬쓰기 시작");
 

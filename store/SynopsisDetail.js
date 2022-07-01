@@ -23,6 +23,7 @@ export const showSynopsisDetail = gql`
 			viewCount
 			hasAudio
 			latestPayment
+			SynopsisComment 
 		}
 	}
 `;

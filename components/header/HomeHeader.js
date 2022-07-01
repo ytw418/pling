@@ -7,7 +7,7 @@ import { Animated } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
 const HomeHeader = ({ children, animatedValue, headerTitle = "Pling" }) => {
-	//console.log("contentOffset", contentOffset);
+
 	const navigation = useNavigation();
 
 	const headerOpacity = animatedValue?.interpolate({
@@ -15,9 +15,6 @@ const HomeHeader = ({ children, animatedValue, headerTitle = "Pling" }) => {
 		outputRange: [0, 1],
 		extrapolate: "clamp",
 	});
-	//style={{ opacity: headerOpacity }}
-
-	// console.log("animatedValue", animatedValue);
 
 	return (
 		<Container>

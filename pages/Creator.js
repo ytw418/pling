@@ -11,7 +11,7 @@ import { useReactiveVar } from "@apollo/client";
 
 const Creator = () => {
 	const user = useReactiveVar(userData);
-	console.log("creator랜더링");
+
 
 	const logOut = async () => {
 		try {

@@ -3,7 +3,7 @@ import styled, { css } from "styled-components/native";
 import DefaultCard from "./card/DefaultCard";
 
 const SynopsisDefault = ({ syDefault }) => {
-	//console.log("SynopsisDefault 랜더링", syDefault);
+
 
 	return (
 		<Container>

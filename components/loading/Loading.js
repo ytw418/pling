@@ -3,7 +3,6 @@ import styled from "styled-components/native";
 import { WINDOW_HEIGHT } from "../../constants";
 
 const Loading = () => {
-	console.log("로딩로딩로딩");
 	return (
 		<View>
 			<Title>로딩중...</Title>

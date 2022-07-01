@@ -47,7 +47,6 @@ export default function App() {
 				//await new Promise((resolve) => setTimeout(resolve, 1000));
 				await Font.loadAsync(Entypo.font);
 				const getUser = await getData();
-				console.log("getUser", getUser);
 				if (getUser?.success) {
 					userData(getUser);
 					isLoggedInVar(true);
