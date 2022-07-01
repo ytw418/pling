@@ -13,10 +13,8 @@ const StoriesCard = ({
 	id,
 	subtitle,
 }) => {
-	//console.log("Date.now() - updatedAt =", (Date.now() - updatedAt) / 1000);
 	const [modalVisible, setModalVisible] = useState(false);
 	const navigation = useNavigation();
-	console.log("subtitle", subtitle);
 
 	return (
 		<Container>

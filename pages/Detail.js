@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled, { css } from "styled-components/native";
 import { useApiState, useDispatch } from "../ContextAPI";
 import { useMutation, gql, useQuery } from "@apollo/client";
@@ -15,13 +15,11 @@ import StoriesCard from "../components/card/StoriesCard";
 const offset = new Animated.Value(0);
 
 const Detail = ({ navigation, route }) => {
-	const { poster, title, genres, id, srcId, isLiked } = route.params;
-	const client = useApolloClient();
-	const CREATE_LIKE_MUTATION = gql`
-		mutation toggleLikeStory {
-			toggleLikeStory(storyId:${srcId})
-		}
-	`;
+	const [on, setOn] = useState(true);
+
+	useEffect(() => setOn((prev) => !prev), []);
+
+	const { id } = route.params;
 
 	const {
 		loading: fsLoading,
@@ -45,58 +43,61 @@ const Detail = ({ navigation, route }) => {
 		},
 	});
 
-	if (fsLoading === false) {
-		console.log("fsData", fsData.poster);
-		console.log("fsLoading", fsLoading);
-		console.log("sdError", sdError);
-		console.log("fsError", fsError);
+	if (fsLoading !== false) {
+		return <Loading></Loading>;
+	}
+	if (sdLoading !== false) {
+		return <Loading></Loading>;
 	}
 
 	return (
 		<SafeAreaView>
 			{typeof offset !== "number" && (
 				<HomeHeader animatedValue={offset}>
-					<FlatListContainer
-						scrollEventThrottle={16}
-						onRefresh={() => {
-							sdRefetch();
-						}}
-						refreshing={false}
-						keyExtractor={(item, index) => item + index}
-						onEndReached={() => console.log("offset", offset)}
-						onScroll={Animated.event(
-							[
-								{
-									nativeEvent: {
-										contentOffset: {
-											y: offset,
+					{on ? (
+						<Loading />
+					) : (
+						<FlatListContainer
+							scrollEventThrottle={16}
+							onRefresh={() => {
+								sdRefetch();
+							}}
+							refreshing={false}
+							keyExtractor={(item, index) => item + index}
+							onEndReached={() => console.log("offset", offset)}
+							onScroll={Animated.event(
+								[
+									{
+										nativeEvent: {
+											contentOffset: {
+												y: offset,
+											},
 										},
 									},
-								},
-							],
-							{ useNativeDriver: false }
-						)}
-						ListHeaderComponent={ListHeader(
-							sdData?.showSynopsisDetail,
-							navigation
-						)}
-						data={fsLoading === false && fsData?.fetchStories}
-						renderItem={(item, index) =>
-							fsLoading === false &&
-							(console.log("first", item),
-							(
-								<StoriesCard
-									poster={item?.item?.poster}
-									text={item?.item?.displayGenre}
-									description={item?.item?.description}
-									audio={item?.item?.audio?.unit}
-									synopsisId={item?.item?.synopsisId}
-									id={item?.item?.id}
-									subtitle={item?.item?.subtitle}
-								/>
-							))
-						}
-					/>
+								],
+								{ useNativeDriver: false }
+							)}
+							ListHeaderComponent={
+								<ListHeader sdData={sdData.showSynopsisDetail}></ListHeader>
+							}
+							data={fsLoading === false && fsData?.fetchStories}
+							renderItem={(item, index) =>
+								fsLoading === false &&
+								(console.log("item", item),
+								(
+									<StoriesCard
+										poster={item?.item?.poster}
+										text={item?.item?.displayGenre}
+										description={item?.item?.description}
+										audio={item?.item?.audio?.unit}
+										synopsisId={item?.item?.synopsisId}
+										id={item?.item?.id}
+										subtitle={item?.item?.subtitle}
+									/>
+								))
+							}
+						/>
+					)}
 				</HomeHeader>
 			)}
 		</SafeAreaView>

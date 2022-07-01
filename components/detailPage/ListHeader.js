@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import {
 	Text,
+	Alert,
 	Dimensions,
 	StyleSheet,
 	View,
@@ -10,14 +11,91 @@ import {
 import styled, { css } from "styled-components/native";
 import { LinearGradient } from "expo-linear-gradient";
 import { WINDOW_WIDTH } from "../../constants";
+import { useApolloClient } from "../../Apollo";
+import { useMutation, gql } from "@apollo/client";
+import Loading from "../loading/Loading";
 
-const ListHeader = (sdData, navigation) => {
+const ListHeader = ({ sdData }) => {
 	const [line, setLine] = useState(3);
 	const [isActivated, setIsActivated] = useState(false);
+	const client = useApolloClient();
+	const {
+		actors,
+		authorId,
+		commentsCount,
+		description,
+		hasAudio,
+		id,
+		latestPayment,
+		note,
+		poster,
+		previewUrl,
+		srcIsLiked,
+		srcLikeCount,
+		summary,
+		srcId,
+		text,
+		title,
+		updatedAt,
+		viewCount,
+		writers,
+		__typename,
+		SynopsisComment,
+	} = sdData;
+	console.log("srcId", srcId);
+	console.log("srcIsLiked", srcIsLiked);
+	console.log("srcLikeCount", srcLikeCount);
+	console.log("SynopsisComment", SynopsisComment);
+
 	const handleLine = () => {
 		isActivated ? setLine(2) : setLine(Number.MAX_SAFE_INTEGER);
 		setIsActivated((prev) => !prev);
 	};
+	const alert = () =>
+		Alert.alert("팝업", poster, [
+			{
+				text: "Cancel",
+				onPress: () => console.log("Cancel Pressed"),
+				style: "cancel",
+			},
+			{ text: "OK", onPress: () => console.log("OK Pressed") },
+		]);
+
+	const CREATE_LIKE_MUTATION = gql`
+		mutation toggleLikeStory {
+			toggleLikeStory(storyId: ${srcId})
+		}
+	`;
+
+	const [isLike, { data, loading, error, reset }] = useMutation(
+		CREATE_LIKE_MUTATION,
+		{
+			update: (cache, data) => {
+				console.log(data?.data?.toggleLikeStory);
+				if (data?.data?.toggleLikeStory) {
+					console.log("캐쉬쓰기 시작");
+
+					client.writeFragment({
+						id: `Synopsis:${id}`,
+						fragment: gql`
+							fragment updateLike on Synopsis {
+								srcIsLiked
+								srcLikeCount
+							}
+						`,
+						data: {
+							srcIsLiked: !srcIsLiked,
+							srcLikeCount: srcIsLiked ? srcLikeCount - 1 : srcLikeCount + 1,
+						},
+					});
+				}
+			},
+		}
+	);
+
+	// console.log("data", data);
+	// console.log("error", error);
+
 	return (
 		<View style={styles.slide}>
 			<LinearGradient
@@ -28,41 +106,41 @@ const ListHeader = (sdData, navigation) => {
 				<Image
 					style={styles.posterImage}
 					accessibilityHint="이미지로딩실패"
-					source={{ uri: sdData?.poster }}
+					source={{ uri: poster }}
 				></Image>
 			</LinearGradient>
 			<Main>
 				<AbsolView>
-					<Title>{sdData?.title}</Title>
+					<Title>{title}</Title>
 					<RowBlock>
-						<CText>{sdData?.text}</CText>
+						<CText>{text}</CText>
 						<RowBlockSub>
-							<Touch onPress={{}}>
+							<Touch onPress={() => alert()}>
 								<TouchIcon>공유</TouchIcon>
 							</Touch>
-							<Touch>
+							<Touch onPress={() => alert()}>
 								<TouchIcon>댓글</TouchIcon>
 							</Touch>
-							<TouchIcon>{sdData?.commentsCount}</TouchIcon>
-							<Touch>
-								<TouchIcon>좋아요</TouchIcon>
+							<TouchIcon>{commentsCount}</TouchIcon>
+							<Touch onPress={isLike}>
+								<TouchIcon>{srcIsLiked ? "취소" : "좋아요"}</TouchIcon>
 							</Touch>
-							<TouchIcon>{sdData?.srcLikeCount}</TouchIcon>
+							<TouchIcon>{srcLikeCount}</TouchIcon>
 						</RowBlockSub>
 					</RowBlock>
 				</AbsolView>
 
 				<Genre>sexual</Genre>
 				<RowBlockSub>
-					<WriterOrActor>작가: {sdData?.writers}</WriterOrActor>
-					<WriterOrActor>출연: {sdData?.actors.join(" ")}</WriterOrActor>
+					<WriterOrActor>작가: {writers}</WriterOrActor>
+					<WriterOrActor>출연: {actors?.join(" ")}</WriterOrActor>
 				</RowBlockSub>
 				<Text
 					style={styles.description}
 					numberOfLines={line}
 					ellipsizeMode="tail"
 				>
-					{sdData?.description ?? "not found"}
+					{description ?? "not found"}
 				</Text>
 				<Touch onPress={() => handleLine()}>
 					<GrayText>더보기</GrayText>
@@ -138,10 +216,14 @@ const RowBlockSub = styled.View`
 const Touch = styled.TouchableHighlight`
 	padding: 0;
 	margin: 0;
+
+	width: 40px;
+	margin-left: 10px;
 `;
 const TouchIcon = styled.Text`
 	color: #fff;
 	font-size: 13px;
+	text-align: center;
 `;
 const WriterOrActor = styled.Text`
 	color: gray;

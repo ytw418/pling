@@ -60,7 +60,7 @@ const Home = ({ route }) => {
 		}
 		console.log("api호출");
 	};
-	console.log("AUTH_TOKEN", AUTH_TOKEN);
+	//	console.log("AUTH_TOKEN", AUTH_TOKEN);
 
 	const {
 		loading: sLoading,
