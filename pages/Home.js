@@ -1,10 +1,7 @@
 import React, { useEffect, useCallback, useState, useRef } from "react";
 import styled, { css } from "styled-components/native";
 import axios from "axios";
-import SynopsisDefault from "../components/SynopsisDefault";
-import StoryChart from "../components/StoryChart";
-import SyGrid from "../components/SyGrid";
-import SyFull from "../components/SyFull";
+
 import MainSlide from "../components/MainSlide";
 import HomeHeader from "../components/header/HomeHeader";
 import { Animated } from "react-native";
@@ -15,12 +12,32 @@ import { fetchSlideItems } from "../store/Slide";
 import { showTabV2 } from "../store/Cate";
 import { useQuery } from "@apollo/client";
 import Loading from "../components/loading/Loading";
+import CateType from "../components/CateType";
+import SynopsisDefault from "../components/SynopsisDefault";
+import StoryChart from "../components/StoryChart";
+import SyGrid from "../components/SyGrid";
+import SyFull from "../components/SyFull";
+import { useApolloClient } from "../Apollo";
+
 const Home = () => {
 	const offset = new Animated.Value(0);
 	const navigation = useNavigation();
 	const PAGE_REF = useRef(0);
 	const [update, setUpdate] = useState(true);
+	const client = useApolloClient();
 
+	const {
+		loading: sLoading,
+		error: sError,
+		data: sData,
+		refetch: sRefetch,
+	} = useQuery(fetchSlideItems, {
+		variables: {
+			tabNo: 1,
+		},
+		// fetchPolicy: "cache-first", // 첫 번째 실행에 사용
+		// nextFetchPolicy: "cache-first", //
+	});
 	const {
 		loading: cLoading,
 		error: cError,
@@ -32,29 +49,20 @@ const Home = () => {
 			tabNo: 1,
 			page: PAGE_REF.current,
 		},
-		fetchPolicy: "network-only", // 첫 번째 실행에 사용
-		nextFetchPolicy: "cache-first", // 후속 실행에 사용
+		//fetchPolicy: "network-only", // 첫 번째 실행에 사용
+		//fetchPolicy: "network-first",
+		//nextFetchPolicy: "cache-first", // 후속 실행에 사용
 		//fetchPolicy: "cache-and-network",
 	});
-
-	const {
-		loading: sLoading,
-		error: sError,
-		data: sData,
-		refetch: sRefetch,
-	} = useQuery(fetchSlideItems, {
-		variables: {
-			tabNo: 1,
-		},
-		fetchPolicy: "cache-first", // 첫 번째 실행에 사용
-		nextFetchPolicy: "cache-first", //
-	});
-
-	console.log("sData", sData);
+	console.log("cData", cData);
+	//console.log("sData", sData);
 
 	if (sLoading !== false) {
 		return <Loading></Loading>;
 	}
+	// if (cLoading !== false) {
+	// 	return <Loading></Loading>;
+	// }
 
 	return (
 		<SafeAreaView>
@@ -65,10 +73,10 @@ const Home = () => {
 						onRefresh={() => {
 							PAGE_REF.current = 0;
 							sRefetch(), cRefetch();
+							client.resetStore();
 						}}
-						onEndReachedThreshold={0.5}
+						//onEndReachedThreshold={0}
 						onEndReached={() => {
-							console.log("엔드포인트offset", offset);
 							PAGE_REF.current += 1;
 							fetchMore({
 								showTabV2,
@@ -90,7 +98,7 @@ const Home = () => {
 								// 	return val;
 								// },
 							}).catch((e) => console.log(e));
-							console.log("cData", cData);
+
 							console.log(" PAGE_REF.current", PAGE_REF.current);
 						}}
 						refreshing={false}
@@ -129,15 +137,7 @@ const Home = () => {
 							) : (
 								(item.item &&
 									item?.item?.typename === ListType.SYNOPSIS_DEFAULT && (
-										<SynopsisDefault
-											syDefault={
-												item?.item
-												//...item?.item,
-												// ...(item.item.titleUrl && {
-												// 	titleImage: item.item.titleUrl,
-												// }),
-											}
-										></SynopsisDefault>
+										<SynopsisDefault syDefault={item?.item}></SynopsisDefault>
 									)) ||
 								(item?.item?.typename === ListType.STORY_CHART && (
 									<StoryChart stChart={item?.item}></StoryChart>
@@ -156,6 +156,10 @@ const Home = () => {
 		</SafeAreaView>
 	);
 };
+//...item?.item,
+// ...(item.item.titleUrl && {
+// 	titleImage: item.item.titleUrl,
+// }),
 
 const SafeAreaView = styled.SafeAreaView`
 	background-color: #000;
