@@ -7,7 +7,6 @@ import { Animated } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
 const HomeHeader = ({ children, animatedValue, headerTitle = "Pling" }) => {
-
 	const navigation = useNavigation();
 
 	const headerOpacity = animatedValue?.interpolate({
@@ -62,6 +61,7 @@ const HomeHeader = ({ children, animatedValue, headerTitle = "Pling" }) => {
 const Container = styled.View`
 	background: #000;
 	color: #000;
+	flex: 1;
 `;
 const Header = styled.View`
 	flex-direction: row;

@@ -31,7 +31,20 @@ const authMiddleware = new ApolloLink((operation, forward) => {
 export const client = new ApolloClient({
 	link: concat(authMiddleware, httpLink),
 	connectToDevTools: true,
-	cache: new InMemoryCache(),
+	cache: new InMemoryCache({
+		typePolicies: {
+			Query: {
+				fields: {
+					showTabV2: {
+						keyArgs: false,
+						merge(existing = [], incoming) {
+							return [...existing, ...incoming];
+						},
+					},
+				},
+			},
+		},
+	}),
 });
 
 const ApolloContext = createContext(client);

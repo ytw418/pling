@@ -15,7 +15,6 @@ const ChartCard = ({
 	srcId,
 	isLiked,
 }) => {
-	ㅈ
 	const [modalVisible, setModalVisible] = useState(false);
 	const navigation = useNavigation();
 

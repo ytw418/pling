@@ -42,7 +42,7 @@ const ListHeader = ({ sdData }) => {
 		__typename,
 		SynopsisComment,
 	} = sdData;
-	
+
 	console.log("SynopsisComment", SynopsisComment);
 
 	const handleLine = () => {

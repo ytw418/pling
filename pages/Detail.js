@@ -43,6 +43,12 @@ const Detail = ({ navigation, route }) => {
 		},
 	});
 
+	// console.log("fsLoading", fsLoading);
+	// console.log("sdLoading", sdLoading);
+	// console.log("sdData", sdData);
+	console.log("sdError", sdError);
+	console.log("fsLoading", fsError);
+
 	if (fsLoading !== false) {
 		return <Loading></Loading>;
 	}
@@ -61,6 +67,7 @@ const Detail = ({ navigation, route }) => {
 							scrollEventThrottle={16}
 							onRefresh={() => {
 								sdRefetch();
+					
 							}}
 							refreshing={false}
 							keyExtractor={(item, index) => item + index}
@@ -78,7 +85,7 @@ const Detail = ({ navigation, route }) => {
 								{ useNativeDriver: false }
 							)}
 							ListHeaderComponent={
-								<ListHeader sdData={sdData.showSynopsisDetail}></ListHeader>
+								<ListHeader sdData={sdData?.showSynopsisDetail}></ListHeader>
 							}
 							data={fsLoading === false && fsData?.fetchStories}
 							renderItem={(item, index) =>
@@ -107,6 +114,7 @@ const Detail = ({ navigation, route }) => {
 const SafeAreaView = styled.SafeAreaView`
 	background-color: #000;
 	color: red;
+	flex: 1;
 `;
 const FlatListContainer = styled.FlatList``;
 

@@ -4,6 +4,7 @@ import DefaultCard from "./card/DefaultCard";
 
 const SynopsisDefault = ({ syDefault }) => {
 
+//console.log("syDefault", syDefault);
 
 	return (
 		<Container>

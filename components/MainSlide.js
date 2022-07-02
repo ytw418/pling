@@ -1,5 +1,4 @@
 import React from "react";
-
 import {
 	Text,
 	Dimensions,
@@ -15,12 +14,9 @@ import { useNavigation } from "@react-navigation/native";
 
 const img404 = require("../images/404img.png");
 const MainSlide = (slides, navigation) => {
-	//	const navigation = useNavigation();
 
-	// if(true) {
-	// 	///
-	// }
-
+	//console.log("slides", slides);
+	
 	return (
 		<View style={styles.container}>
 			<SwiperFlatList
@@ -65,9 +61,9 @@ const MainSlide = (slides, navigation) => {
 						</LinearGradient>
 						<View style={[styles.child]}>
 							<Text style={styles.description}>
-								{slides?.title ?? "not found"}
+								{slides?.title ?? " "}
 							</Text>
-							<Text style={styles.text}>{slides?.text ?? "not found"}</Text>
+							<Text style={styles.text}>{slides?.text ?? " "}</Text>
 						</View>
 					</View>
 				))}

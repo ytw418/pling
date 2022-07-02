@@ -3,64 +3,39 @@ import styled, { css } from "styled-components/native";
 import axios from "axios";
 import SynopsisDefault from "../components/SynopsisDefault";
 import StoryChart from "../components/StoryChart";
-import { getEnvVars } from "../environment";
 import SyGrid from "../components/SyGrid";
 import SyFull from "../components/SyFull";
 import MainSlide from "../components/MainSlide";
-import { useApiState, useDispatch } from "../ContextAPI";
 import HomeHeader from "../components/header/HomeHeader";
 import { Animated } from "react-native";
 import { ListType } from "../constants";
 import Loader from "../components/loading/Loader";
 import { useNavigation } from "@react-navigation/native";
-import Entypo from "@expo/vector-icons/Entypo";
-import * as SplashScreen from "expo-splash-screen";
-import * as Font from "expo-font";
-import { SectionList } from "react-native-web";
 import { fetchSlideItems } from "../store/Slide";
 import { showTabV2 } from "../store/Cate";
-import { userData } from "../store/Login";
-
-import { useQuery, gql, useReactiveVar, useApolloClient } from "@apollo/client";
-const Home = ({ route }) => {
-	const [appIsReady, setAppIsReady] = useState(false);
-	const dispatch = useDispatch();
-	const state = useApiState();
-	const { APIURL } = getEnvVars();
-	const AUTH_TOKEN = userData().token;
+import { useQuery } from "@apollo/client";
+import Loading from "../components/loading/Loading";
+const Home = () => {
 	const offset = new Animated.Value(0);
 	const navigation = useNavigation();
+	const PAGE_REF = useRef(0);
+	const [update, setUpdate] = useState(true);
 
-	const getMainApi = async () => {
-		try {
-			axios.defaults.baseURL = APIURL;
-			axios.defaults.headers.common["Authorization"] = `Bearer ${AUTH_TOKEN}`;
-			axios.defaults.headers.post["Content-Type"] = "application/json";
-			axios.defaults.headers.post["X-Requested-With"] = "XMLHttpRequest";
-			const [slidesResult, cateResult] = await Promise.all([
-				axios.get("test-slides"),
-				axios.get("test-categories"),
-			]);
-
-			if (cateResult) {
-				console.log("cateResult.status", cateResult.status);
-				dispatch({
-					type: "HOME_LODGING_CATE",
-					cate: cateResult?.data?.data,
-				});
-			}
-			await axios.get("test-slides").then((slidesResult) =>
-				dispatch({
-					type: "HOME_LODGING_SLIDES",
-					slides: slidesResult?.data?.data,
-				})
-			);
-		} catch (error) {
-			console.log("error :>> ", error);
-		}
-		console.log("api호출");
-	};
-	//	console.log("AUTH_TOKEN", AUTH_TOKEN);
+	const {
+		loading: cLoading,
+		error: cError,
+		data: cData,
+		fetchMore,
+		refetch: cRefetch,
+	} = useQuery(showTabV2, {
+		variables: {
+			tabNo: 1,
+			page: PAGE_REF.current,
+		},
+		fetchPolicy: "network-only", // 첫 번째 실행에 사용
+		nextFetchPolicy: "cache-first", // 후속 실행에 사용
+		//fetchPolicy: "cache-and-network",
+	});
 
 	const {
 		loading: sLoading,
@@ -71,19 +46,15 @@ const Home = ({ route }) => {
 		variables: {
 			tabNo: 1,
 		},
+		fetchPolicy: "cache-first", // 첫 번째 실행에 사용
+		nextFetchPolicy: "cache-first", //
 	});
 
-	const {
-		loading: cLoading,
-		error: cError,
-		data: cData,
-		refetch: cRefetch,
-	} = useQuery(showTabV2, {
-		variables: {
-			tabNo: 1,
-			page: 0,
-		},
-	});
+	console.log("sData", sData);
+
+	if (sLoading !== false) {
+		return <Loading></Loading>;
+	}
 
 	return (
 		<SafeAreaView>
@@ -92,7 +63,35 @@ const Home = ({ route }) => {
 					<FlatListContainer
 						scrollEventThrottle={16}
 						onRefresh={() => {
+							PAGE_REF.current = 0;
 							sRefetch(), cRefetch();
+						}}
+						onEndReachedThreshold={0.5}
+						onEndReached={() => {
+							console.log("엔드포인트offset", offset);
+							PAGE_REF.current += 1;
+							fetchMore({
+								showTabV2,
+								variables: {
+									tabNo: 1,
+									page: PAGE_REF.current,
+								},
+								// updateQuery: (prev, { fetchMoreResult }) => {
+								// 	// console.log("fetchMoreResult", fetchMoreResult.showTabV2);
+								// 	// console.log("prev", prev.showTabV2);
+
+								// 	if (!fetchMoreResult) return prev;
+								// 	const val = Object.assign({}, cData, {
+								// 		showTabV2: cData.showTabV2.concat(
+								// 			fetchMoreResult.showTabV2
+								// 		),
+								// 	});
+								// 	console.log("val", val);
+								// 	return val;
+								// },
+							}).catch((e) => console.log(e));
+							console.log("cData", cData);
+							console.log(" PAGE_REF.current", PAGE_REF.current);
 						}}
 						refreshing={false}
 						// getItemLayout={(data, index) => ({
@@ -106,7 +105,6 @@ const Home = ({ route }) => {
 						// removeClippedSubviews={false}
 						// windowSize={2}'
 
-						onEndReached={() => console.log("offset", offset)}
 						onScroll={Animated.event(
 							[
 								{
@@ -124,7 +122,7 @@ const Home = ({ route }) => {
 								? MainSlide(sData?.fetchSlideItems, navigation)
 								: Loader({ title: "슬라이드 로딩중...", slideHeight: 500 })
 						}
-						data={cData?.showTabV2 ? cData?.showTabV2 : [1]}
+						data={cData?.showTabV2 && cData?.showTabV2}
 						renderItem={(item) =>
 							item.item === 1 ? (
 								<Loader title="리스트 로딩중..." slideHeight={200} />
@@ -141,7 +139,7 @@ const Home = ({ route }) => {
 											}
 										></SynopsisDefault>
 									)) ||
-								(item?.item?.typename === "Story_chart" && (
+								(item?.item?.typename === ListType.STORY_CHART && (
 									<StoryChart stChart={item?.item}></StoryChart>
 								)) ||
 								(item?.item?.typename === ListType.SYNOPSIS_GRID && (
@@ -162,6 +160,7 @@ const Home = ({ route }) => {
 const SafeAreaView = styled.SafeAreaView`
 	background-color: #000;
 	color: red;
+	flex: 1;
 `;
 const FlatListContainer = styled.FlatList``;
 

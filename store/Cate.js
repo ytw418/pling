@@ -71,15 +71,15 @@ export const showTabV2 = gql`
 					list
 					numColumns
 				}
-				... on Product {
-					id
-					title
-					titleUrl
-					description
-					text
-					poster
-					note
-				}
+				# ... on Product {
+				# 	# id
+				# 	# title
+				# 	# titleUrl
+				# 	# description
+				# 	# text
+				# 	# poster
+				# 	# note
+				# }
 				... on Event {
 					id
 					title
