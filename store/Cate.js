@@ -1,4 +1,10 @@
 import { gql } from "@apollo/client";
+import { makeVar } from "@apollo/client";
+
+export const showTabV2TabNo1LastPage = makeVar(true);
+export const showTabV2TabNo3LastPage = makeVar(true);
+
+
 
 export const showTabV2 = gql`
 	query showTabV2($tabNo: Int, $page: Int) {

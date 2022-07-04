@@ -1,10 +1,33 @@
-import React from "react";
-import styled from "styled-components/native";
+import React, { useEffect, useCallback, useState, useRef } from "react";
+import styled, { css } from "styled-components/native";
+import axios from "axios";
+import { showTabV2TabNo3 } from "../constants";
+import { tabNoType } from "../constants";
+import { SlideTabNo } from "../constants";
+import MainSlide from "../components/MainSlide";
 import HomeHeader from "../components/header/HomeHeader";
-import { WINDOW_HEIGHT } from "../constants";
-import { useQuery } from "@apollo/client";
+import { Animated } from "react-native";
+import Loader from "../components/loading/Loader";
+import { useNavigation } from "@react-navigation/native";
 import { fetchSlideItems } from "../store/Slide";
+import { showTabV2 } from "../store/Cate";
+import { useQuery } from "@apollo/client";
+import Loading from "../components/loading/Loading";
+import CateType from "../components/CateType";
+import SynopsisDefault from "../components/SynopsisDefault";
+import StoryChart from "../components/StoryChart";
+import SyGrid from "../components/SyGrid";
+import SyFull from "../components/SyFull";
+import { useApolloClient } from "../Apollo";
+import { showTabV2TabNo3LastPage } from "../store/Cate";
+
 const PlingBox = () => {
+	const offset = new Animated.Value(0);
+	const navigation = useNavigation();
+	const PAGE_REF_TAB_02 = useRef(0);
+	const [update, setUpdate] = useState(true);
+	const client = useApolloClient();
+
 	const {
 		loading: sLoading,
 		error: sError,
@@ -12,30 +35,119 @@ const PlingBox = () => {
 		refetch: sRefetch,
 	} = useQuery(fetchSlideItems, {
 		variables: {
-			tabNo: 1,
+			tabNo: SlideTabNo.TAB_NO_2,
 		},
-		fetchPolicy: "network-only",
+		// fetchPolicy: "cache-first", // 첫 번째 실행에 사용
+		//fetchPolicy: "no-cache",
+		// nextFetchPolicy: "cache-first", //
 	});
 
-	console.log("sData", sData);
+	const {
+		loading: cLoading,
+		error: cError,
+		data: cData,
+		fetchMore,
+		refetch: cRefetch,
+	} = useQuery(showTabV2, {
+		variables: {
+			type: tabNoType.TAB_NO_3,
+			tabNo: showTabV2TabNo3,
+			page: PAGE_REF_TAB_02.current,
+		},
+		onCompleted: () => console.log("showTabV2 호출완료", cData),
+	});
+
+	//console.log("cData", cData);
+	//console.log("sData", sData);
+
+	if (sLoading !== false) {
+		return <Loading></Loading>;
+	}
+	// if (cLoading !== false) {
+	// 	return <Loading></Loading>;
+	// }
 
 	return (
-		<HomeHeader headerTitle={"PlingBox"}>
-			<View>
-				<Title>PlingBox</Title>
-			</View>
-		</HomeHeader>
+		<SafeAreaView>
+			{typeof offset !== "number" && (
+				<HomeHeader animatedValue={offset}>
+					<FlatListContainer
+						scrollEventThrottle={16}
+						onRefresh={() => {
+							PAGE_REF_TAB_02.current = 0;
+							client.resetStore();
+						}}
+						//onEndReachedThreshold={0}
+						onEndReached={() => {
+							if (showTabV2TabNo3LastPage()) {
+								PAGE_REF_TAB_02.current += 1;
+								fetchMore({
+									showTabV2,
+									variables: {
+										type: tabNoType.TAB_NO_3,
+										tabNo: showTabV2TabNo3,
+										page: PAGE_REF_TAB_02.current,
+									},
+								}).catch((e) => console.log(e));
+
+								console.log(
+									" PAGE_REF_TAB_02.current",
+									PAGE_REF_TAB_02.current
+								);
+							} else
+								console.log(
+									" showTabV2TabNo3LastPage 추가 호출 없음: ",
+									showTabV2TabNo3LastPage()
+								);
+						}}
+						refreshing={false}
+						keyExtractor={(item, index) => item + index}
+						// initialNumToRender={2} //초기 랜더링 아이탬 갯수
+						// maxToRenderPerBatch={1} // 스크롤시 최대 랜더링 될 아이탬 갯수
+						// removeClippedSubviews={false}
+						// windowSize={2}'
+
+						onScroll={Animated.event(
+							[
+								{
+									nativeEvent: {
+										contentOffset: {
+											y: offset,
+										},
+									},
+								},
+							],
+							{ useNativeDriver: false }
+						)}
+						ListHeaderComponent={
+							sData?.fetchSlideItems
+								? MainSlide(sData?.fetchSlideItems, navigation)
+								: Loader({ title: "슬라이드 로딩중...", slideHeight: 500 })
+						}
+						data={cData?.showTabV2 && cData?.showTabV2}
+						renderItem={(item) =>
+							item.item === 1 ? (
+								<Loader title="리스트 로딩중..." slideHeight={200} />
+							) : (
+								<CateType item={item}></CateType>
+							)
+						}
+					/>
+				</HomeHeader>
+			)}
+		</SafeAreaView>
 	);
 };
+//...item?.item,
+// ...(item.item.titleUrl && {
+// 	titleImage: item.item.titleUrl,
+// }),
 
-const View = styled.View`
+const SafeAreaView = styled.SafeAreaView`
 	background-color: #000;
-	justify-content: center;
-	align-items: center;
-	height: ${WINDOW_HEIGHT - 50}px;
+	color: red;
+	flex: 1;
 `;
-const Title = styled.Text`
-	color: #fff;
-	font-size: 18px;
-`;
+const FlatListContainer = styled.FlatList``;
+
 export default PlingBox;

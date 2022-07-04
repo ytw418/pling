@@ -2,11 +2,11 @@ import React, { useEffect, useCallback, useState, useRef } from "react";
 import styled, { css } from "styled-components/native";
 import axios from "axios";
 import { showTabV2TabNo1 } from "../constants";
-import { tabNoType } from "../constants";
-import { SlideTabNo } from "../constants";
+
 import MainSlide from "../components/MainSlide";
 import HomeHeader from "../components/header/HomeHeader";
 import { Animated } from "react-native";
+import { ListType } from "../constants";
 import Loader from "../components/loading/Loader";
 import { useNavigation } from "@react-navigation/native";
 import { fetchSlideItems } from "../store/Slide";
@@ -19,7 +19,6 @@ import StoryChart from "../components/StoryChart";
 import SyGrid from "../components/SyGrid";
 import SyFull from "../components/SyFull";
 import { useApolloClient } from "../Apollo";
-import { showTabV2TabNo1LastPage } from "../store/Cate";
 
 const Home = () => {
 	const offset = new Animated.Value(0);
@@ -35,10 +34,10 @@ const Home = () => {
 		refetch: sRefetch,
 	} = useQuery(fetchSlideItems, {
 		variables: {
-			tabNo: SlideTabNo.TAB_NO_1,
+			tabNo: showTabV2TabNo1,
 		},
 		// fetchPolicy: "cache-first", // 첫 번째 실행에 사용
-		//fetchPolicy: "no-cache",
+		fetchPolicy: "no-cache",
 		// nextFetchPolicy: "cache-first", //
 	});
 
@@ -50,15 +49,17 @@ const Home = () => {
 		refetch: cRefetch,
 	} = useQuery(showTabV2, {
 		variables: {
-		//	type: tabNoType.TAB_NO_1,
+			//type: "tabNo1",
 			tabNo: showTabV2TabNo1,
 			page: PAGE_REF.current,
 		},
-		onCompleted: () => console.log("showTabV2 호출완료"),
+		//onCompleted: () => console.log("onComplete"),
 
+		//fetchPolicy: "network-only", // 첫 번째 실행에 사용
+		//fetchPolicy: "network-first",
+		//nextFetchPolicy: "cache-first", // 후속 실행에 사용
+		//fetchPolicy: "cache-and-network",
 	});
-
-
 	//console.log("cData", cData);
 	//console.log("sData", sData);
 
@@ -77,24 +78,38 @@ const Home = () => {
 						scrollEventThrottle={16}
 						onRefresh={() => {
 							PAGE_REF.current = 0;
+							sRefetch(), cRefetch();
 							client.resetStore();
+
 						}}
 						//onEndReachedThreshold={0}
 						onEndReached={() => {
-							if (showTabV2TabNo1LastPage()) {
-								PAGE_REF.current += 1;
-								fetchMore({
-									showTabV2,
-									variables: {
-									//	type: tabNoType.TAB_NO_1,
-										tabNo: showTabV2TabNo1,
-										page: PAGE_REF.current,
-									},
-								}).catch((e) => console.log(e));
+							PAGE_REF.current += 1;
+							fetchMore({
+								showTabV2,
+								variables: {
+								//	type: "tabNo1",
+									tabNo: showTabV2TabNo1,
+									page: PAGE_REF.current,
+								},
 
-								console.log(" PAGE_REF.current", PAGE_REF.current);
-							} else
-								console.log(" showTabV2TabNo1LastPage 추가 호출 없음: ", showTabV2TabNo1LastPage());
+								// updateQuery: (prev, { fetchMoreResult }) => {
+								// 	// console.log("fetchMoreResult", fetchMoreResult.showTabV2);
+								// 	// console.log("prev", prev.showTabV2);
+
+								// 	if (!fetchMoreResult) return prev;
+								// 	const val = Object.assign({}, cData, {
+								// 		showTabV2: cData.showTabV2.concat(
+								// 			fetchMoreResult.showTabV2
+								// 		),
+								// 	});
+								// 	console.log("val", val);
+								// 	return val;
+								// },
+							}).catch((e) => console.log(e));
+
+							console.log(" PAGE_REF.current", PAGE_REF.current);
+							console.log("cData", cData);
 						}}
 						refreshing={false}
 						keyExtractor={(item, index) => item + index}
@@ -125,7 +140,19 @@ const Home = () => {
 							item.item === 1 ? (
 								<Loader title="리스트 로딩중..." slideHeight={200} />
 							) : (
-								<CateType item={item}></CateType>
+								(item.item &&
+									item?.item?.typename === ListType.SYNOPSIS_DEFAULT && (
+										<SynopsisDefault syDefault={item?.item}></SynopsisDefault>
+									)) ||
+								(item?.item?.typename === ListType.STORY_CHART && (
+									<StoryChart stChart={item?.item}></StoryChart>
+								)) ||
+								(item?.item?.typename === ListType.SYNOPSIS_GRID && (
+									<SyGrid syGrid={item?.item}></SyGrid>
+								)) ||
+								(item?.item?.typename === ListType.SYNOPSIS_FULL && (
+									<SyFull syFull={item?.item}></SyFull>
+								))
 							)
 						}
 					/>

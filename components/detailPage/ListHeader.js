@@ -15,10 +15,16 @@ import { useApolloClient } from "../../Apollo";
 import { useMutation, gql } from "@apollo/client";
 import Loading from "../loading/Loading";
 
+const CREATE_LIKE_MUTATION = gql`
+	mutation toggleLikeStory($storyId: ID!) {
+		toggleLikeStory(storyId: $storyId)
+	}
+`;
+
 const ListHeader = ({ sdData }) => {
 	const [line, setLine] = useState(3);
 	const [isActivated, setIsActivated] = useState(false);
-	const client = useApolloClient();
+	// const client = useApolloClient();
 	const {
 		actors,
 		authorId,
@@ -40,10 +46,9 @@ const ListHeader = ({ sdData }) => {
 		viewCount,
 		writers,
 		__typename,
-		SynopsisComment,
 	} = sdData;
 
-	console.log("SynopsisComment", SynopsisComment);
+	//console.log("SynopsisComment", SynopsisComment);
 
 	const handleLine = () => {
 		isActivated ? setLine(2) : setLine(Number.MAX_SAFE_INTEGER);
@@ -59,20 +64,15 @@ const ListHeader = ({ sdData }) => {
 			{ text: "OK", onPress: () => console.log("OK Pressed") },
 		]);
 
-	const CREATE_LIKE_MUTATION = gql`
-		mutation toggleLikeStory {
-			toggleLikeStory(storyId: ${srcId})
-		}
-	`;
-
 	const [isLike, { data, loading, error, reset }] = useMutation(
 		CREATE_LIKE_MUTATION,
 		{
 			update: (cache, data) => {
 				if (data?.data?.toggleLikeStory) {
 					console.log("캐쉬쓰기 시작");
+					// cache.modify()
 
-					client.writeFragment({
+					cache.writeFragment({
 						id: `Synopsis:${id}`,
 						fragment: gql`
 							fragment updateLike on Synopsis {
@@ -119,7 +119,7 @@ const ListHeader = ({ sdData }) => {
 								<TouchIcon>댓글</TouchIcon>
 							</Touch>
 							<TouchIcon>{commentsCount}</TouchIcon>
-							<Touch onPress={isLike}>
+							<Touch onPress={() => isLike({ variables: { storyId: srcId } })}>
 								<TouchIcon>{srcIsLiked ? "취소" : "좋아요"}</TouchIcon>
 							</Touch>
 							<TouchIcon>{srcLikeCount}</TouchIcon>
@@ -132,13 +132,15 @@ const ListHeader = ({ sdData }) => {
 					<WriterOrActor>작가: {writers}</WriterOrActor>
 					<WriterOrActor>출연: {actors?.join(" ")}</WriterOrActor>
 				</RowBlockSub>
-				<Text
-					style={styles.description}
-					numberOfLines={line}
-					ellipsizeMode="tail"
-				>
-					{description ?? "not found"}
-				</Text>
+				{description && (
+					<Text
+						style={styles.description}
+						numberOfLines={line}
+						ellipsizeMode="tail"
+					>
+						{description}
+					</Text>
+				)}
 				<Touch onPress={() => handleLine()}>
 					<GrayText>더보기</GrayText>
 				</Touch>
