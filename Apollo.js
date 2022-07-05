@@ -68,6 +68,7 @@ export const client = new ApolloClient({
 								args.tabNo === 1 && showTabV2TabNo1LastPage(false);
 								args.tabNo === 2 && showTabV2TabNo1LastPage(false);
 								args.tabNo === 3 && showTabV2TabNo3LastPage(false);
+
 								console.log("TAB_NO_1신규 데이터 없음 ");
 								//	return [...existing, {stop : true}];
 							}
