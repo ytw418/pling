@@ -75,6 +75,7 @@ const PlingBox = () => {
 						scrollEventThrottle={16}
 						onRefresh={() => {
 							PAGE_REF_TAB_02.current = 0;
+							showTabV2TabNo1LastPage(true);
 							client.resetStore();
 						}}
 						//onEndReachedThreshold={0}
