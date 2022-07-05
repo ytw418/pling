@@ -63,11 +63,11 @@ export const client = new ApolloClient({
 					showTabV2: {
 						keyArgs: ["tabNo"],
 
-						merge(existing = [], incoming, options) {
-							if (incoming.length === 0) {
-								options.args.tabNo === 1 && showTabV2TabNo1LastPage(false);
-								options.args.tabNo === 2 && showTabV2TabNo1LastPage(false);
-								options.args.tabNo === 3 && showTabV2TabNo3LastPage(false);
+						merge(existing = [], incoming, { args }) {
+							if (Array.isArray(incoming) && incoming.length === 0) {
+								args.tabNo === 1 && showTabV2TabNo1LastPage(false);
+								args.tabNo === 2 && showTabV2TabNo1LastPage(false);
+								args.tabNo === 3 && showTabV2TabNo3LastPage(false);
 								console.log("TAB_NO_1신규 데이터 없음 ");
 								//	return [...existing, {stop : true}];
 							}
