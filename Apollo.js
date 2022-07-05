@@ -63,17 +63,16 @@ export const client = new ApolloClient({
 					showTabV2: {
 						keyArgs: ["tabNo"],
 
-						merge(existing = [], incoming,options) {
+						merge(existing = [], incoming, options) {
 							if (incoming.length === 0) {
-								options.args.tabNo === 1  && showTabV2TabNo1LastPage(false)
-								options.args.tabNo === 2  && showTabV2TabNo1LastPage(false)
-								options.args.tabNo === 3  && showTabV2TabNo3LastPage(false)
+								options.args.tabNo === 1 && showTabV2TabNo1LastPage(false);
+								options.args.tabNo === 2 && showTabV2TabNo1LastPage(false);
+								options.args.tabNo === 3 && showTabV2TabNo3LastPage(false);
 								console.log("TAB_NO_1신규 데이터 없음 ");
-							//	return [...existing, {stop : true}];
+								//	return [...existing, {stop : true}];
 							}
 							console.log("TAB_NO_1카테고리 리스트 추가 ");
-					
-							
+
 							return [...existing, ...incoming];
 						},
 					},
@@ -83,18 +82,12 @@ export const client = new ApolloClient({
 					// 		if (incoming.length === 0) {
 					// 			showTabV2TabNo1LastPage(false)
 					// 			console.log("TAB_NO_2신규 데이터 없음 ");
-							
+
 					// 		}
 					// 		console.log("TAB_NO_2카테고리 리스트 추가 ");
 					// 		return [...existing, ...incoming];
 					// 	},
 					// },
-					
-
-					
-
-					
-
 
 					// showTabV2: {
 					// 	keyArgs: ["tabNo2"],

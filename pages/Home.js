@@ -50,14 +50,12 @@ const Home = () => {
 		refetch: cRefetch,
 	} = useQuery(showTabV2, {
 		variables: {
-		//	type: tabNoType.TAB_NO_1,
+			//	type: tabNoType.TAB_NO_1,
 			tabNo: showTabV2TabNo1,
 			page: PAGE_REF.current,
 		},
 		onCompleted: () => console.log("showTabV2 호출완료"),
-
 	});
-
 
 	//console.log("cData", cData);
 	//console.log("sData", sData);
@@ -77,6 +75,7 @@ const Home = () => {
 						scrollEventThrottle={16}
 						onRefresh={() => {
 							PAGE_REF.current = 0;
+							showTabV2TabNo1LastPage(true);
 							client.resetStore();
 						}}
 						//onEndReachedThreshold={0}
@@ -86,7 +85,7 @@ const Home = () => {
 								fetchMore({
 									showTabV2,
 									variables: {
-									//	type: tabNoType.TAB_NO_1,
+										//	type: tabNoType.TAB_NO_1,
 										tabNo: showTabV2TabNo1,
 										page: PAGE_REF.current,
 									},
@@ -94,7 +93,10 @@ const Home = () => {
 
 								console.log(" PAGE_REF.current", PAGE_REF.current);
 							} else
-								console.log(" showTabV2TabNo1LastPage 추가 호출 없음: ", showTabV2TabNo1LastPage());
+								console.log(
+									" showTabV2TabNo1LastPage 추가 호출 없음: ",
+									showTabV2TabNo1LastPage()
+								);
 						}}
 						refreshing={false}
 						keyExtractor={(item, index) => item + index}
